@@ -1,4 +1,4 @@
-! inlist to evolve a 15 solar mass star
+! inlist to evolve a 1 solar mass star
 
 ! For the sake of future readers of this file (yourself included),
 ! ONLY include the controls you are actually using.  DO NOT include
@@ -49,11 +49,11 @@
      use_gold_tolerances = .true.
 
   ! stop when the star nears ZAMS (Lnuc/L > 0.99)
-    Lnuc_div_L_zams_limit = 0.99d0
-    stop_near_zams = .true.
-
-  ! stop when star > 4.57 Gyrs
-    ! max_age = 4.57e9
+    ! Lnuc_div_L_zams_limit = 0.99d0
+    ! stop_near_zams = .true.
+  
+  ! stop when star age > 4.57 Gyrs
+    max_age = 4.57e9
 
   ! stop when the center mass fraction of h1 drops below this limit
     xa_central_lower_limit_species(1) = 'h1'
