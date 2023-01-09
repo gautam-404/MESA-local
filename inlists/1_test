@@ -9,7 +9,7 @@
 	!# output
 	    history_columns_file = 'history_columns.list'
 	    profile_columns_file = 'profile_columns.list'
-	    pgstar_flag = .false.    ! (dont) display on-screen plots
+	    pgstar_flag = .true.    ! display on-screen plots
 
         save_photo_when_terminate = .true.
         show_log_description_at_start = .false.
