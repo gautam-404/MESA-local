@@ -3,8 +3,7 @@ from MesaHandler import MesaAccess
 from alive_progress import alive_bar
 
 dsct = ProjectOps("dsct")       
-dsct.create(overwrite=False, clean=True)    
-dsct.clean()            
+dsct.create(overwrite=False, clean=True)             
 
 # with alive_bar(unknown="waves") as bar:
 #     for i in range(6):
