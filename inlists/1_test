@@ -14,6 +14,10 @@
     save_photo_when_terminate = .true.
     show_log_description_at_start = .false.
 
+	!save a model at the end of the run
+    save_model_when_terminate = .true.
+    save_model_filename = 'early_evolution.mod'
+
 	!# starting model
 
     create_pre_main_sequence_model = .true.
