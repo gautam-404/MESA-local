@@ -13,7 +13,7 @@ with alive_bar(unknown="waves2", spinner="dots") as bar:
     for i in range(5):
         dsct.loadProjInlist(inlists[i])
         dsct.run(silent=True)
-        file = open("/workspace/MESA/dsct/runlog", "a")  # append mode
+        file = open("/workspace/MESA-pod/MESA-local/dsct/runlog", "a")  # append mode
         file.write( "\n\n"+("*"*100)+"\n\n" )
         file.close()
         bar()
