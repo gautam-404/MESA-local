@@ -12,7 +12,7 @@
 	pgstar_flag = .false.    ! (dont) display on-screen plots
 
 	save_photo_when_terminate = .true.
-	show_log_description_at_start = .false.
+	show_log_description_at_start = .true.
 
 	save_model_when_terminate = .true.
 	save_model_filename = 'evolution.mod' !change this
@@ -26,8 +26,8 @@
 	set_uniform_initial_composition = .true.
 	initial_zfracs = 6 ! GS98_zfracs = 3,  AGSS09_zfracs = 6
 
-	set_initial_model_number = .true.
-	initial_model_number = 0
+	!set_initial_model_number = .true.
+	!initial_model_number = 0
 
 	relax_mass = .true.
 	lg_max_abs_mdot = 6 ! rate of mass loss is 10^6 msun/yr (or 0.01 Msun in 10-4 yr)
