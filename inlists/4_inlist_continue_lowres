@@ -12,7 +12,7 @@
 	pgstar_flag = .false.    ! (dont) display on-screen plots
 
 	save_photo_when_terminate = .true.
-	show_log_description_at_start = .true.
+	show_log_description_at_start = .false.
 
 	!save_model_when_terminate = .true.
 	!save_model_filename = 'evolution.mod' !change this
