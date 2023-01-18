@@ -9,7 +9,6 @@ dsct.make()
 
 
 for i in range(5):
-    print("Running inlist: ", inlists[i])
+    print("Running for inlist: ", inlists[i])
     dsct.loadProjInlist(inlists[i])
     dsct.run(silent=True)
-    
