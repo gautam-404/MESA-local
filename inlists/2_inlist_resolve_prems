@@ -50,7 +50,7 @@
 	show_net_reactions_info = .true.
 
     !# misc 
-	num_steps_for_garbage_collection = 0 ! might be required on networked computers
+	!num_steps_for_garbage_collection = 0 ! might be required on networked computers
 
 / !end of star_job namelist
 
