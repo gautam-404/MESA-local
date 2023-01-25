@@ -83,15 +83,13 @@ function gyre2freqs
     $GYRE_DIR/bin/gyre gyre.in &>gyre.out
 
     ### Hooray!
-    if [ -f "$INPUT.dat" ]; then
-        cp "$INPUT.dat" ..
-        echo "Conversion complete. Results can be found in $INPUT.dat"
-        rm -rf *
-        currdir=$(pwd)
-        cd ..
-        rm -rf "$currdir"
-        exit 0
-    fi
+    cp "$INPUT.dat" ..
+    echo "Conversion complete. Results can be found in $INPUT.dat"
+    rm -rf *
+    currdir=$(pwd)
+    cd ..
+    rm -rf "$currdir"
+    exit 0
     echo "Something went wrong. Perhaps the following will help:"
     cat gyre.out
     cd ..
