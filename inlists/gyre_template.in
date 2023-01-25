@@ -4,7 +4,7 @@
 &model
 	model_type = 'EVOL'                 ! Obtain structure coefficient data from an evolutionary model
                                  
-	file='profile800.data.FGONG'
+	file='profile837.data.FGONG'
     file_format = 'FGONG'              ! File format of the evolutionary model       
 /
 
@@ -20,9 +20,9 @@
 	l = 2
 /
 
-&mode
-	l = 3
-/
+!&mode
+!	l = 3
+!/
 
 &osc
 	inner_bound = 'ZERO_R'
@@ -54,9 +54,9 @@
 
 &ad_output
 	freq_units = 'CYC_PER_DAY'
-	summary_file='SJM_GYRE_profile00.txt'
-	summary_file_format = 'TXT'
-	summary_item_list = 'M_star,R_star,l,n_pg,n_p,n_g,E_norm,freq,freq_units' ! Items to appear in summary file"
+	summary_file = 'profile1-freqs.dat'
+    summary_file_format = 'TXT'
+    summary_item_list = 'l, n_pg, n_p, n_g, freq, E_norm'
 /
 
 &nad_output

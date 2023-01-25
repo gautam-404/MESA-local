@@ -18899,3 +18899,662 @@ TIME: 08:51:56
 
 ****************************************************************************************************
 
+gyre [6.0]
+----------
+
+OpenMP Threads   : 4
+Input filename   : gyre.in
+
+Model Init
+----------
+
+Reading from FGONG file
+   File name profile5.data.FGONG
+   File version 1300
+   Read 1192 points
+   No need to add central point
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 0
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.9332E+01 ->  0.5910E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 9 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 1 subinterval(s) in iteration 3
+   Refined 1 subinterval(s) in iteration 4
+   Refined 0 subinterval(s) in iteration 5
+   Final grid has 1 segment(s) and 1204 point(s):
+      Segment 1 : x range 0.0000 -> 1.0022 (1 -> 1204)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     0.433 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   0    0       6      6      0  0.95981681E+01  0.00000000E+00 0.2119E-13      9
+   0    0       7      7      0  0.10953943E+02  0.00000000E+00 0.3562E-14      8
+   0    0       8      8      0  0.12245445E+02  0.00000000E+00 0.7721E-14      7
+   0    0       9      9      0  0.13530629E+02  0.00000000E+00 0.8880E-14      9
+   0    0      10     10      0  0.14821350E+02  0.00000000E+00 0.8566E-16      6
+   0    0      11     11      0  0.16088258E+02  0.00000000E+00 0.3798E-14      7
+   0    0      12     12      0  0.17344661E+02  0.00000000E+00 0.4204E-14      6
+   0    0      13     13      0  0.18619091E+02  0.00000000E+00 0.1119E-14      7
+   0    0      14     14      0  0.19904490E+02  0.00000000E+00 0.8355E-15      6
+   0    0      15     15      0  0.21189133E+02  0.00000000E+00 0.4158E-14      7
+   0    0      16     16      0  0.22478460E+02  0.00000000E+00 0.5229E-15      7
+   0    0      17     17      0  0.23777606E+02  0.00000000E+00 0.5537E-14      7
+   0    0      18     18      0  0.25083833E+02  0.00000000E+00 0.2153E-14      7
+   0    0      19     19      0  0.26394181E+02  0.00000000E+00 0.6480E-14      6
+   0    0      20     20      0  0.27708376E+02  0.00000000E+00 0.1521E-13      7
+   0    0      21     21      0  0.29025487E+02  0.00000000E+00 0.3526E-13      7
+   0    0      22     22      0  0.30344996E+02  0.00000000E+00 0.6771E-14      7
+   0    0      23     23      0  0.31666218E+02  0.00000000E+00 0.2185E-13      7
+   0    0      24     24      0  0.32987739E+02  0.00000000E+00 0.7076E-14      7
+   0    0      25     25      0  0.34308739E+02  0.00000000E+00 0.3789E-14      6
+   0    0      26     26      0  0.35627647E+02  0.00000000E+00 0.2537E-13      7
+   0    0      27     27      0  0.36942303E+02  0.00000000E+00 0.1434E-13      6
+   0    0      28     28      0  0.38250567E+02  0.00000000E+00 0.9544E-14      7
+   0    0      29     29      0  0.39548390E+02  0.00000000E+00 0.8526E-14      7
+   0    0      30     30      0  0.40830171E+02  0.00000000E+00 0.3571E-13      7
+   0    0      31     31      0  0.42088432E+02  0.00000000E+00 0.6228E-14      7
+   0    0      32     32      0  0.43316996E+02  0.00000000E+00 0.8261E-14      7
+   0    0      33     33      0  0.44522598E+02  0.00000000E+00 0.9539E-14      5
+   0    0      34     34      0  0.45724922E+02  0.00000000E+00 0.9111E-15      7
+   0    0      35     35      0  0.46948444E+02  0.00000000E+00 0.6396E-14      7
+   0    0      36     36      0  0.48201035E+02  0.00000000E+00 0.9499E-14      7
+   0    0      37     37      0  0.49478316E+02  0.00000000E+00 0.1989E-13      6
+   0    0      38     38      0  0.50772879E+02  0.00000000E+00 0.2428E-13      6
+   0    0      39     39      0  0.52077554E+02  0.00000000E+00 0.4416E-14      6
+   0    0      40     40      0  0.53389563E+02  0.00000000E+00 0.2634E-13      6
+   0    0      41     41      0  0.54704136E+02  0.00000000E+00 0.2766E-14      7
+   0    0      42     42      0  0.56019184E+02  0.00000000E+00 0.5437E-14      6
+   0    0      43     43      0  0.57333294E+02  0.00000000E+00 0.2584E-13      7
+   0    0      44     44      0  0.58643997E+02  0.00000000E+00 0.1483E-13      6
+  Time elapsed :      2.769 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 1
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.9332E+01 ->  0.5910E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 9 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 1 subinterval(s) in iteration 3
+   Refined 1 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 1 subinterval(s) in iteration 7
+   Refined 0 subinterval(s) in iteration 8
+   Final grid has 1 segment(s) and 1207 point(s):
+      Segment 1 : x range 0.0000 -> 1.0022 (1 -> 1207)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     2.094 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   1    0       6      5      0  0.10219839E+02  0.00000000E+00 0.1210E-14      7
+   1    0       7      6      0  0.11546547E+02  0.00000000E+00 0.6555E-14      8
+   1    0       8      7      0  0.12832659E+02  0.00000000E+00 0.4259E-14      7
+   1    0       9      8      0  0.14127630E+02  0.00000000E+00 0.3217E-14      7
+   1    0      10      9      0  0.15413149E+02  0.00000000E+00 0.2158E-14      7
+   1    0      11     10      0  0.16673947E+02  0.00000000E+00 0.3331E-14      7
+   1    0      12     11      0  0.17940440E+02  0.00000000E+00 0.2733E-14      7
+   1    0      13     12      0  0.19224803E+02  0.00000000E+00 0.8957E-14      7
+   1    0      14     13      0  0.20512857E+02  0.00000000E+00 0.1847E-13      7
+   1    0      15     14      0  0.21800841E+02  0.00000000E+00 0.8277E-14      7
+   1    0      16     15      0  0.23096676E+02  0.00000000E+00 0.1601E-13      7
+   1    0      17     16      0  0.24401728E+02  0.00000000E+00 0.9171E-14      6
+   1    0      18     17      0  0.25711944E+02  0.00000000E+00 0.2024E-13      7
+   1    0      19     18      0  0.27025363E+02  0.00000000E+00 0.1049E-13      7
+   1    0      20     19      0  0.28341819E+02  0.00000000E+00 0.4037E-14      7
+   1    0      21     20      0  0.29661112E+02  0.00000000E+00 0.2042E-13      7
+   1    0      22     21      0  0.30981896E+02  0.00000000E+00 0.5326E-14      7
+   1    0      23     22      0  0.32303667E+02  0.00000000E+00 0.2527E-13      6
+   1    0      24     23      0  0.33625773E+02  0.00000000E+00 0.2548E-13      7
+   1    0      25     24      0  0.34947098E+02  0.00000000E+00 0.7956E-14      6
+   1    0      26     25      0  0.36264710E+02  0.00000000E+00 0.3425E-13      7
+   1    0      27     26      0  0.37577788E+02  0.00000000E+00 0.6715E-15      7
+   1    0      28     27      0  0.38882785E+02  0.00000000E+00 0.1158E-14      7
+   1    0      29     28      0  0.40174207E+02  0.00000000E+00 0.2091E-13      7
+   1    0      30     29      0  0.41446557E+02  0.00000000E+00 0.1782E-13      7
+   1    0      31     30      0  0.42691881E+02  0.00000000E+00 0.5553E-14      7
+   1    0      32     31      0  0.43908807E+02  0.00000000E+00 0.3318E-14      7
+   1    0      33     32      0  0.45110402E+02  0.00000000E+00 0.1252E-13      6
+   1    0      34     33      0  0.46322383E+02  0.00000000E+00 0.2487E-13      6
+   1    0      35     34      0  0.47561745E+02  0.00000000E+00 0.2473E-13      6
+   1    0      36     35      0  0.48827931E+02  0.00000000E+00 0.5661E-13      7
+   1    0      37     36      0  0.50115144E+02  0.00000000E+00 0.1666E-13      6
+   1    0      38     37      0  0.51416024E+02  0.00000000E+00 0.6248E-14      6
+   1    0      39     38      0  0.52724812E+02  0.00000000E+00 0.3036E-13      7
+   1    0      40     39      0  0.54038334E+02  0.00000000E+00 0.3174E-13      6
+   1    0      41     40      0  0.55353552E+02  0.00000000E+00 0.3285E-13      6
+   1    0      42     41      0  0.56668350E+02  0.00000000E+00 0.3232E-13      6
+   1    0      43     42      0  0.57980615E+02  0.00000000E+00 0.4687E-14      7
+  Time elapsed :      4.564 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 2
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.9332E+01 ->  0.5910E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 8 subinterval(s) in iteration 1
+   Refined 2 subinterval(s) in iteration 2
+   Refined 2 subinterval(s) in iteration 3
+   Refined 2 subinterval(s) in iteration 4
+   Refined 2 subinterval(s) in iteration 5
+   Refined 2 subinterval(s) in iteration 6
+   Refined 1 subinterval(s) in iteration 7
+   Refined 1 subinterval(s) in iteration 8
+   Refined 1 subinterval(s) in iteration 9
+   Refined 0 subinterval(s) in iteration 10
+   Final grid has 1 segment(s) and 1213 point(s):
+      Segment 1 : x range 0.0000 -> 1.0022 (1 -> 1213)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     2.536 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   2    0       5      5      0  0.93879390E+01  0.00000000E+00 0.1071E-14      9
+   2    0       6      6      0  0.10771253E+02  0.00000000E+00 0.3839E-14      7
+   2    0       7      7      0  0.12081802E+02  0.00000000E+00 0.6019E-14      8
+   2    0       8      8      0  0.13377130E+02  0.00000000E+00 0.1353E-14      7
+   2    0       9      9      0  0.14679479E+02  0.00000000E+00 0.1190E-13      7
+   2    0      10     10      0  0.15958601E+02  0.00000000E+00 0.3822E-14      7
+   2    0      11     11      0  0.17222616E+02  0.00000000E+00 0.6312E-14      8
+   2    0      12     12      0  0.18502881E+02  0.00000000E+00 0.1749E-13      7
+   2    0      13     13      0  0.19794996E+02  0.00000000E+00 0.8135E-16      6
+   2    0      14     14      0  0.21086088E+02  0.00000000E+00 0.6374E-14      7
+   2    0      15     15      0  0.22380602E+02  0.00000000E+00 0.4669E-14      6
+   2    0      16     16      0  0.23684391E+02  0.00000000E+00 0.2844E-14      7
+   2    0      17     17      0  0.24995232E+02  0.00000000E+00 0.1228E-13      7
+   2    0      18     18      0  0.26309981E+02  0.00000000E+00 0.1567E-14      8
+   2    0      19     19      0  0.27628155E+02  0.00000000E+00 0.9386E-14      7
+   2    0      20     20      0  0.28948849E+02  0.00000000E+00 0.8791E-14      6
+   2    0      21     21      0  0.30271704E+02  0.00000000E+00 0.7403E-14      7
+   2    0      22     22      0  0.31595927E+02  0.00000000E+00 0.5667E-14      7
+   2    0      23     23      0  0.32920178E+02  0.00000000E+00 0.1048E-13      6
+   2    0      24     24      0  0.34243791E+02  0.00000000E+00 0.3343E-13      7
+   2    0      25     25      0  0.35565353E+02  0.00000000E+00 0.3672E-13      7
+   2    0      26     26      0  0.36882531E+02  0.00000000E+00 0.5620E-14      7
+   2    0      27     27      0  0.38193410E+02  0.00000000E+00 0.1215E-13      8
+   2    0      28     28      0  0.39494002E+02  0.00000000E+00 0.2093E-13      7
+   2    0      29     29      0  0.40778599E+02  0.00000000E+00 0.2278E-14      7
+   2    0      30     30      0  0.42039867E+02  0.00000000E+00 0.3527E-13      7
+   2    0      31     31      0  0.43271410E+02  0.00000000E+00 0.2649E-14      7
+   2    0      32     32      0  0.44479404E+02  0.00000000E+00 0.3159E-14      7
+   2    0      33     33      0  0.45683112E+02  0.00000000E+00 0.1671E-13      7
+   2    0      34     34      0  0.46907518E+02  0.00000000E+00 0.3601E-13      6
+   2    0      35     35      0  0.48161123E+02  0.00000000E+00 0.3720E-13      6
+   2    0      36     36      0  0.49439551E+02  0.00000000E+00 0.1309E-12      6
+   2    0      37     37      0  0.50735355E+02  0.00000000E+00 0.3018E-13      7
+   2    0      38     38      0  0.52041282E+02  0.00000000E+00 0.7499E-14      6
+   2    0      39     39      0  0.53354374E+02  0.00000000E+00 0.4182E-13      6
+   2    0      40     40      0  0.54669827E+02  0.00000000E+00 0.4887E-13      6
+   2    0      41     41      0  0.55985567E+02  0.00000000E+00 0.8008E-14      7
+   2    0      42     42      0  0.57300166E+02  0.00000000E+00 0.4958E-14      8
+   2    0      43     43      0  0.58611130E+02  0.00000000E+00 0.4648E-13      8
+  Time elapsed :      4.404 s
+
+
+
+****************************************************************************************************
+
+gyre [6.0]
+----------
+
+OpenMP Threads   : 4
+Input filename   : gyre.in
+
+Model Init
+----------
+
+Reading from FGONG file
+   File name profile837.data.FGONG
+   File version 1300
+   Read 1051 points
+   No need to add central point
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 0
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 0 subinterval(s) in iteration 3
+   Final grid has 1 segment(s) and 1053 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1053)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     0.417 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   0    0       1      1      0  0.35848299E+01  0.00000000E+00 0.1904E-14      6
+   0    0       2      2      0  0.46017258E+01  0.00000000E+00 0.4588E-14      6
+   0    0       3      3      0  0.55948635E+01  0.00000000E+00 0.1916E-14      7
+   0    0       4      4      0  0.66112975E+01  0.00000000E+00 0.9294E-14      7
+   0    0       5      5      0  0.77092517E+01  0.00000000E+00 0.8725E-14      7
+   0    0       6      6      0  0.88646422E+01  0.00000000E+00 0.1217E-13      6
+   0    0       7      7      0  0.10025317E+02  0.00000000E+00 0.1920E-13      6
+   0    0       8      8      0  0.11182035E+02  0.00000000E+00 0.2303E-13      6
+   0    0       9      9      0  0.12350389E+02  0.00000000E+00 0.2205E-13      7
+   0    0      10     10      0  0.13544336E+02  0.00000000E+00 0.6800E-14      6
+   0    0      11     11      0  0.14763052E+02  0.00000000E+00 0.2564E-13      6
+   0    0      12     12      0  0.16000760E+02  0.00000000E+00 0.9018E-14      6
+  Time elapsed :      0.336 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 1
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 1 subinterval(s) in iteration 3
+   Refined 1 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 0 subinterval(s) in iteration 7
+   Final grid has 1 segment(s) and 1057 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1057)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     2.064 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   1    0       1      0      0  0.36766851E+01  0.00000000E+00 0.4725E-14      7
+   1    0       2      1      0  0.47925238E+01  0.00000000E+00 0.4694E-14      7
+   1    0       3      2      0  0.59499460E+01  0.00000000E+00 0.1188E-13      7
+   1    0       4      3      0  0.71160932E+01  0.00000000E+00 0.1068E-13      7
+   1    0       5      4      0  0.82918119E+01  0.00000000E+00 0.1307E-14      7
+   1    0       6      5      0  0.94634169E+01  0.00000000E+00 0.1003E-13      7
+   1    0       7      6      0  0.10620031E+02  0.00000000E+00 0.5897E-14      7
+   1    0       8      7      0  0.11773082E+02  0.00000000E+00 0.1333E-13      6
+   1    0       9      8      0  0.12945184E+02  0.00000000E+00 0.4971E-14      6
+   1    0      10      9      0  0.14142737E+02  0.00000000E+00 0.1003E-13      6
+   1    0      11     10      0  0.15362998E+02  0.00000000E+00 0.4135E-14      6
+   1    0      12     11      0  0.16600300E+02  0.00000000E+00 0.6912E-14      6
+  Time elapsed :      1.184 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 2
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 2 subinterval(s) in iteration 2
+   Refined 2 subinterval(s) in iteration 3
+   Refined 2 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 1 subinterval(s) in iteration 7
+   Refined 0 subinterval(s) in iteration 8
+   Final grid has 1 segment(s) and 1061 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1061)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     1.538 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   2    0      -1      0      1  0.30069955E+01  0.00000000E+00 0.1099E-13      8
+   2    0       0      0      0  0.37429812E+01  0.00000000E+00 0.1025E-14      7
+   2    0       1      1      0  0.45233737E+01  0.00000000E+00 0.2859E-13      7
+   2    0       2      2      0  0.53599556E+01  0.00000000E+00 0.9916E-14      6
+   2    0       3      3      0  0.64251733E+01  0.00000000E+00 0.2088E-13      7
+   2    0       4      4      0  0.75792917E+01  0.00000000E+00 0.8523E-14      7
+   2    0       5      5      0  0.87613418E+01  0.00000000E+00 0.9141E-14      7
+   2    0       6      6      0  0.99318960E+01  0.00000000E+00 0.1869E-13      7
+   2    0       7      7      0  0.11089693E+02  0.00000000E+00 0.4736E-14      7
+   2    0       8      8      0  0.12253215E+02  0.00000000E+00 0.3423E-13      7
+   2    0       9      9      0  0.13439706E+02  0.00000000E+00 0.4673E-13      6
+   2    0      10     10      0  0.14650120E+02  0.00000000E+00 0.1124E-13      6
+   2    0      11     11      0  0.15879807E+02  0.00000000E+00 0.1702E-13      6
+   2    0      12     12      0  0.17123952E+02  0.00000000E+00 0.1396E-13      6
+  Time elapsed :      1.536 s
+
+
+
+****************************************************************************************************
+
+gyre [6.0]
+----------
+
+OpenMP Threads   : 4
+Input filename   : gyre.in
+
+Model Init
+----------
+
+Reading from FGONG file
+   File name profile837.data.FGONG
+   File version 1300
+   Read 1051 points
+   No need to add central point
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 0
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 0 subinterval(s) in iteration 3
+   Final grid has 1 segment(s) and 1053 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1053)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     0.376 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   0    0       1      1      0  0.35848299E+01  0.00000000E+00 0.1904E-14      6
+   0    0       2      2      0  0.46017258E+01  0.00000000E+00 0.4588E-14      6
+   0    0       3      3      0  0.55948635E+01  0.00000000E+00 0.1916E-14      7
+   0    0       4      4      0  0.66112975E+01  0.00000000E+00 0.9294E-14      7
+   0    0       5      5      0  0.77092517E+01  0.00000000E+00 0.8725E-14      7
+   0    0       6      6      0  0.88646422E+01  0.00000000E+00 0.1217E-13      6
+   0    0       7      7      0  0.10025317E+02  0.00000000E+00 0.1920E-13      6
+   0    0       8      8      0  0.11182035E+02  0.00000000E+00 0.2303E-13      6
+   0    0       9      9      0  0.12350389E+02  0.00000000E+00 0.2205E-13      7
+   0    0      10     10      0  0.13544336E+02  0.00000000E+00 0.6800E-14      6
+   0    0      11     11      0  0.14763052E+02  0.00000000E+00 0.2564E-13      6
+   0    0      12     12      0  0.16000760E+02  0.00000000E+00 0.9018E-14      6
+  Time elapsed :      0.296 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 1
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 1 subinterval(s) in iteration 3
+   Refined 1 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 0 subinterval(s) in iteration 7
+   Final grid has 1 segment(s) and 1057 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1057)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     1.000 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   1    0       1      0      0  0.36766851E+01  0.00000000E+00 0.4725E-14      7
+   1    0       2      1      0  0.47925238E+01  0.00000000E+00 0.4694E-14      7
+   1    0       3      2      0  0.59499460E+01  0.00000000E+00 0.1188E-13      7
+   1    0       4      3      0  0.71160932E+01  0.00000000E+00 0.1068E-13      7
+   1    0       5      4      0  0.82918119E+01  0.00000000E+00 0.1307E-14      7
+   1    0       6      5      0  0.94634169E+01  0.00000000E+00 0.1003E-13      7
+   1    0       7      6      0  0.10620031E+02  0.00000000E+00 0.5897E-14      7
+   1    0       8      7      0  0.11773082E+02  0.00000000E+00 0.1333E-13      6
+   1    0       9      8      0  0.12945184E+02  0.00000000E+00 0.4971E-14      6
+   1    0      10      9      0  0.14142737E+02  0.00000000E+00 0.1003E-13      6
+   1    0      11     10      0  0.15362998E+02  0.00000000E+00 0.4135E-14      6
+   1    0      12     11      0  0.16600300E+02  0.00000000E+00 0.6912E-14      6
+  Time elapsed :      1.085 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 2
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 2 subinterval(s) in iteration 2
+   Refined 2 subinterval(s) in iteration 3
+   Refined 2 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 1 subinterval(s) in iteration 7
+   Refined 0 subinterval(s) in iteration 8
+   Final grid has 1 segment(s) and 1061 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1061)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     1.218 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   2    0      -1      0      1  0.30069955E+01  0.00000000E+00 0.1099E-13      8
+   2    0       0      0      0  0.37429812E+01  0.00000000E+00 0.1025E-14      7
+   2    0       1      1      0  0.45233737E+01  0.00000000E+00 0.2859E-13      7
+   2    0       2      2      0  0.53599556E+01  0.00000000E+00 0.9916E-14      6
+   2    0       3      3      0  0.64251733E+01  0.00000000E+00 0.2088E-13      7
+   2    0       4      4      0  0.75792917E+01  0.00000000E+00 0.8523E-14      7
+   2    0       5      5      0  0.87613418E+01  0.00000000E+00 0.9141E-14      7
+   2    0       6      6      0  0.99318960E+01  0.00000000E+00 0.1869E-13      7
+   2    0       7      7      0  0.11089693E+02  0.00000000E+00 0.4736E-14      7
+   2    0       8      8      0  0.12253215E+02  0.00000000E+00 0.3423E-13      7
+   2    0       9      9      0  0.13439706E+02  0.00000000E+00 0.4673E-13      6
+   2    0      10     10      0  0.14650120E+02  0.00000000E+00 0.1124E-13      6
+   2    0      11     11      0  0.15879807E+02  0.00000000E+00 0.1702E-13      6
+   2    0      12     12      0  0.17123952E+02  0.00000000E+00 0.1396E-13      6
+  Time elapsed :      1.132 s
+
+
+
+****************************************************************************************************
+
+gyre [6.0]
+----------
+
+OpenMP Threads   : 4
+Input filename   : gyre.in
+
+Model Init
+----------
+
+Reading from FGONG file
+   File name profile837.data.FGONG
+   File version 1300
+   Read 1051 points
+   No need to add central point
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 0
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 0 subinterval(s) in iteration 3
+   Final grid has 1 segment(s) and 1053 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1053)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     0.603 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   0    0       1      1      0  0.35848299E+01  0.00000000E+00 0.1904E-14      6
+   0    0       2      2      0  0.46017258E+01  0.00000000E+00 0.4588E-14      6
+   0    0       3      3      0  0.55948635E+01  0.00000000E+00 0.1916E-14      7
+   0    0       4      4      0  0.66112975E+01  0.00000000E+00 0.9294E-14      7
+   0    0       5      5      0  0.77092517E+01  0.00000000E+00 0.8725E-14      7
+   0    0       6      6      0  0.88646422E+01  0.00000000E+00 0.1217E-13      6
+   0    0       7      7      0  0.10025317E+02  0.00000000E+00 0.1920E-13      6
+   0    0       8      8      0  0.11182035E+02  0.00000000E+00 0.2303E-13      6
+   0    0       9      9      0  0.12350389E+02  0.00000000E+00 0.2205E-13      7
+   0    0      10     10      0  0.13544336E+02  0.00000000E+00 0.6800E-14      6
+   0    0      11     11      0  0.14763052E+02  0.00000000E+00 0.2564E-13      6
+   0    0      12     12      0  0.16000760E+02  0.00000000E+00 0.9018E-14      6
+  Time elapsed :      0.387 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 1
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 1 subinterval(s) in iteration 2
+   Refined 1 subinterval(s) in iteration 3
+   Refined 1 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 0 subinterval(s) in iteration 7
+   Final grid has 1 segment(s) and 1057 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1057)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     1.132 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   1    0       1      0      0  0.36766851E+01  0.00000000E+00 0.4725E-14      7
+   1    0       2      1      0  0.47925238E+01  0.00000000E+00 0.4694E-14      7
+   1    0       3      2      0  0.59499460E+01  0.00000000E+00 0.1188E-13      7
+   1    0       4      3      0  0.71160932E+01  0.00000000E+00 0.1068E-13      7
+   1    0       5      4      0  0.82918119E+01  0.00000000E+00 0.1307E-14      7
+   1    0       6      5      0  0.94634169E+01  0.00000000E+00 0.1003E-13      7
+   1    0       7      6      0  0.10620031E+02  0.00000000E+00 0.5897E-14      7
+   1    0       8      7      0  0.11773082E+02  0.00000000E+00 0.1333E-13      6
+   1    0       9      8      0  0.12945184E+02  0.00000000E+00 0.4971E-14      6
+   1    0      10      9      0  0.14142737E+02  0.00000000E+00 0.1003E-13      6
+   1    0      11     10      0  0.15362998E+02  0.00000000E+00 0.4135E-14      6
+   1    0      12     11      0  0.16600300E+02  0.00000000E+00 0.6912E-14      6
+  Time elapsed :      1.262 s
+
+Mode Search
+-----------
+
+Mode parameters
+   l : 2
+   m : 0
+
+Building frequency grid (REAL axis)
+   added scan interval :  0.2709E+01 ->  0.1716E+02 (100 points, LINEAR)
+
+Building spatial grid
+   Refined 1 subinterval(s) in iteration 1
+   Refined 2 subinterval(s) in iteration 2
+   Refined 2 subinterval(s) in iteration 3
+   Refined 2 subinterval(s) in iteration 4
+   Refined 1 subinterval(s) in iteration 5
+   Refined 1 subinterval(s) in iteration 6
+   Refined 1 subinterval(s) in iteration 7
+   Refined 0 subinterval(s) in iteration 8
+   Final grid has 1 segment(s) and 1061 point(s):
+      Segment 1 : x range 0.0000 -> 1.0014 (1 -> 1061)
+
+Starting search (adiabatic)
+
+Evaluating discriminant
+  Time elapsed :     1.343 s
+
+Root Solving
+   l    m    n_pg    n_p    n_g       Re(omega)       Im(omega)        chi n_iter
+   2    0      -1      0      1  0.30069955E+01  0.00000000E+00 0.1099E-13      8
+   2    0       0      0      0  0.37429812E+01  0.00000000E+00 0.1025E-14      7
+   2    0       1      1      0  0.45233737E+01  0.00000000E+00 0.2859E-13      7
+   2    0       2      2      0  0.53599556E+01  0.00000000E+00 0.9916E-14      6
+   2    0       3      3      0  0.64251733E+01  0.00000000E+00 0.2088E-13      7
+   2    0       4      4      0  0.75792917E+01  0.00000000E+00 0.8523E-14      7
+   2    0       5      5      0  0.87613418E+01  0.00000000E+00 0.9141E-14      7
+   2    0       6      6      0  0.99318960E+01  0.00000000E+00 0.1869E-13      7
+   2    0       7      7      0  0.11089693E+02  0.00000000E+00 0.4736E-14      7
+   2    0       8      8      0  0.12253215E+02  0.00000000E+00 0.3423E-13      7
+   2    0       9      9      0  0.13439706E+02  0.00000000E+00 0.4673E-13      6
+   2    0      10     10      0  0.14650120E+02  0.00000000E+00 0.1124E-13      6
+   2    0      11     11      0  0.15879807E+02  0.00000000E+00 0.1702E-13      6
+   2    0      12     12      0  0.17123952E+02  0.00000000E+00 0.1396E-13      6
+  Time elapsed :      1.291 s
+
+
+
+****************************************************************************************************
+
