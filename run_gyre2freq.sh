@@ -17,10 +17,6 @@ function gyre2freqs
     mkdir -p "$path" 
     cd "$path" 
 
-
-    logfile="gyre-l0.log"
-    #exec > $logfile 2>&1
-
     ## Create a gyre.in file to find the large frequency separation
     echo "&model
         model_type = 'EVOL'
@@ -68,7 +64,7 @@ function gyre2freqs
 
     &ad_output
         freq_units = 'CYC_PER_DAY'
-        summary_file = 'profile1-freqs.dat'
+        summary_file = '$fname.dat'
         summary_file_format = 'TXT'
         summary_item_list = 'l, n_pg, n_p, n_g, freq, E_norm'
     /
@@ -83,21 +79,22 @@ function gyre2freqs
     $GYRE_DIR/bin/gyre gyre.in &>gyre.out
 
     ### Hooray!
-    cp "$INPUT.dat" ..
-    echo "Conversion complete. Results can be found in $INPUT.dat"
-    rm -rf *
+    if [ -e "$fname.dat" ]; then
+        cp "$fname.dat" ..
+        echo "Conversion complete. Results can be found in $fname.dat"
+    else
+        echo "Error: GYRE did not complete successfully."
+        echo " Check the gyre.out file for more information."
+        exit 1
+    fi
     currdir=$(pwd)
     cd ..
     rm -rf "$currdir"
-    exit 0
-    echo "Something went wrong. Perhaps the following will help:"
-    cat gyre.out
-    cd ..
 }
 
 
 cd dsct/LOGS
-for FGONG in *.FGONG; do
+for FGONG in `ls *.FGONG | sort -g`; do
     echo $FGONG
     gyre2freqs $FGONG
 done
