@@ -25,3 +25,5 @@ def initial_abundances(Zinit):
   initial_he4= (1 - initial_he3) * Yinit
 
   return Yinit, initial_h1, initial_h2, initial_he3, initial_he4
+
+# def 

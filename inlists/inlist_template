@@ -115,7 +115,7 @@
 
 	!# timestep controls
 
-	max_timestep = 3.15d13  ! in seconds. equals 10^6 yr.  max_timestep <= 0 means no upper limit.
+	max_timestep = 3.15d13  
 
 	!limit on magnitude of relative change at any grid point
 	delta_lgTeff_limit = 0.005
