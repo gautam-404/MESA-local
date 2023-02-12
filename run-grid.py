@@ -1,17 +1,21 @@
-from MESAcontroller import ProjectOps, MesaAccess
 import glob
-import numpy as np
-import helper
 import os
 import shutil
 
-def run_star(mass, metallicity):
+import numpy as np
+from MESAcontroller import MesaAccess, ProjectOps
+from rich import print
+
+import helper
+
+
+def run_star(mass, metallicity, name="test"):
     inlist_template = "./inlists/inlist_template"
 
-    proj = ProjectOps('test')     
+    proj = ProjectOps(name)     
     proj.create(overwrite=True, clean=True)             
     proj.make()
-    star = MesaAccess("test")
+    star = MesaAccess(name)
     star.load_HistoryColumns("./inlists/history_columns.list")
     star.load_ProfileColumns("./inlists/profile_columns.list")
 
@@ -49,7 +53,12 @@ if __name__ == "__main__":
         metallicities = arr[:,1].astype(float)
 
         ## Create archive directories
-        os.mkdir("grid_LOGSarchive")
+        if os.path.exists("grid_LOGSarchive"):
+            shutil.rmtree("grid_LOGSarchive_old")
+            shutil.move("grid_LOGSarchive", "grid_LOGSarchive_old")
+            os.mkdir("grid_LOGSarchive")
+        else:
+            os.mkdir("grid_LOGSarchive")
         os.mkdir("grid_LOGSarchive/histories")
         os.mkdir("grid_LOGSarchive/profiles")
         os.mkdir("grid_LOGSarchive/gyre")
@@ -57,7 +66,10 @@ if __name__ == "__main__":
         ## Run grid
         model = 1
         for mass, metallicity in zip(masses, metallicities):
-            run_star(mass, metallicity)
+            print(f"[b i yellow]Running model {model} of {len(masses)}")
+            # name = f"star_{model}"
+            name = "star"
+            run_star(mass, metallicity, name)
 
             ## Archive LOGS
             os.mkdir(f"grid_LOGSarchive/gyre/model_{model}")
@@ -68,7 +80,12 @@ if __name__ == "__main__":
                     shutil.move(file, f"grid_LOGSarchive/profiles/profile_{model}.index")
                 elif "-freqs.dat" in file:
                     shutil.copy(file, f"grid_LOGSarchive/gyre/model_{model}")
+            shutil.rmtree(name)
+
             model += 1
+            print(f"[b i green]Done with model {model-1} of {len(masses)}")
+            os.system("clear")
+
 
 
     
