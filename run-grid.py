@@ -13,7 +13,7 @@ def run_star(mass, metallicity, name="test"):
     inlist_template = "./inlists/inlist_template"
 
     proj = ProjectOps(name)     
-    proj.create(overwrite=True, clean=True)             
+    proj.create(overwrite=True)             
     proj.make()
     star = MesaAccess(name)
     star.load_HistoryColumns("./inlists/history_columns.list")
@@ -67,8 +67,8 @@ if __name__ == "__main__":
         model = 1
         for mass, metallicity in zip(masses, metallicities):
             print(f"[b i yellow]Running model {model} of {len(masses)}")
-            # name = f"star_{model}"
-            name = "star"
+            # name = f"work_{model}"
+            name = "test"
             run_star(mass, metallicity, name)
 
             ## Archive LOGS
