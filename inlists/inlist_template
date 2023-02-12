@@ -139,10 +139,8 @@
 
 	warn_when_large_rel_run_E_err = 99d0
 
-	!to help with convergence
-	okay_to_reduce_gradT_excess = .true. ! maybe helpful in early phases
 	Pextra_factor = 1.0 ! Higher number helps with convergence
-		scale_max_correction = 0.1
+	
 
 	! Convergence checking
 	use_gold_tolerances = .true.

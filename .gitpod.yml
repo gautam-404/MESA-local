@@ -1,0 +1,2 @@
+tasks:
+  - before: bash env_var.sh
