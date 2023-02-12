@@ -2,7 +2,8 @@ from MESAcontroller import ProjectOps, MesaAccess
 import glob
 import numpy as np
 import helper
-import os, shutil
+import os
+import shutil
 
 def run_star(mass, metallicity):
     inlist_template = "./inlists/inlist_template"
