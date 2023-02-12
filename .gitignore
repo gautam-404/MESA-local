@@ -6,6 +6,7 @@ software/*
 gridwork/*
 grid_LOGSarchive/*
 
-# Mac OS generated files #
+
 **/.DS_Store
 .vscode/*
+__pycache__/
