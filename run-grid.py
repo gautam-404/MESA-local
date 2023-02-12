@@ -62,18 +62,6 @@ def run_star(mass, metallicity, model=0, logging=False):
 
 ## Main script
 if __name__ == "__main__":
-    testrun = True
-
-    if testrun:
-        run_star(1.6, 0.0065, logging=True)
-        # masses = [1.3, 1.35, 1.36]
-        # metallicities = [0.001, 0.001, 0.001]
-    else:
-        arr = np.genfromtxt("coarse_age_map.csv",
-                        delimiter=",", dtype=str, skip_header=1)
-        masses = arr[:,0].astype(float)
-        metallicities = arr[:,1].astype(float)
-
     ## Create archive directories
     if os.path.exists("grid_LOGSarchive"):
         shutil.rmtree("grid_LOGSarchive")
@@ -87,7 +75,25 @@ if __name__ == "__main__":
         shutil.rmtree("gridwork")
     os.mkdir("gridwork")
 
-    ## Run grid
+    testrun = True
+    if testrun:
+        run_star(1.6, 0.0065, logging=False)
+        # masses = [1.3, 1.35, 1.36]
+        # metallicities = [0.001, 0.001, 0.001]
+    else:
+        arr = np.genfromtxt("coarse_age_map.csv",
+                        delimiter=",", dtype=str, skip_header=1)
+        masses = arr[:,0].astype(float)
+        metallicities = arr[:,1].astype(float)
+
+    ## Run grid in parallel
+    n_processes = 1      ## OMP_NUM_THREADS x n_processes = TOTAL CORES AVAILABLE
+    with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
+        task1 = progress_bar.add_task("[red]Running...", total=len(masses))
+        for _ in pool.starmap(run_star, zip(masses, metallicities, range(len(masses)))):
+            progress_bar.advance(task1)
+
+    ## Run grid in serial
     # model = 1
     # for mass, metallicity in zip(masses, metallicities):
     #     print(f"[b i yellow]Running model {model} of {len(masses)}")
@@ -99,12 +105,4 @@ if __name__ == "__main__":
     #     model += 1
     #     print(f"[b i green]Done with model {model-1} of {len(masses)}")
     #     os.system("clear")
-
-
-    ## Run grid in parallel
-    n_processes = 2      ## OMP_NUM_THREADS x n_processes = TOTAL CORES AVAILABLE
-    with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
-        task1 = progress_bar.add_task("[red]Running...", total=len(masses))
-        for _ in pool.starmap(run_star, zip(masses, metallicities, range(len(masses)))):
-            progress_bar.advance(task1)
 
