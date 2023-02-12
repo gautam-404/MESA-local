@@ -3,7 +3,6 @@ import os
 import shutil
 import sys
 from multiprocessing.pool import Pool
-NUM_CORES = 2       ## OMP_NUM_THREADS x NUM_CORES <= (1 or 2) x TOTAL CORES AVAILABLE
 
 import numpy as np
 from MESAcontroller import MesaAccess, ProjectOps
@@ -18,7 +17,7 @@ import helper
 def mute():
     sys.stdout = open(os.devnull, 'w') 
 
-def run_star(mass, metallicity, model):
+def run_star(mass, metallicity, model=0, logging=False):
     inlist_template = "./inlists/inlist_template"
 
     name=f"gridwork/work_{model}"
@@ -42,12 +41,12 @@ def run_star(mass, metallicity, model):
         star.set(input_params, force=True)
         star.set('max_age', phase_max_age.pop(0))
         if phase_name == "Initial Contraction":
-            proj.run(silent=True)
+            proj.run(logging=logging)
         else:
-            proj.resume(silent=True)
+            proj.resume(logging=logging)
             
     ## Run GYRE
-    proj.runGyre(gyre_in="./inlists/gyre_template.in", files='all')
+    proj.runGyre(gyre_in="./inlists/gyre_template.in", files='all', logging=logging)
 
     ## Archive LOGS
     os.mkdir(f"grid_LOGSarchive/gyre/model_{model}")
@@ -63,55 +62,49 @@ def run_star(mass, metallicity, model):
 
 ## Main script
 if __name__ == "__main__":
-    testrun = False
+    testrun = True
 
     if testrun:
-        # run_star(1.6, 0.0065)
-        masses = [1.3, 1.35, 1.36]
-        metallicities = [0.001, 0.001, 0.001]
+        run_star(1.6, 0.0065, logging=True)
+        # masses = [1.3, 1.35, 1.36]
+        # metallicities = [0.001, 0.001, 0.001]
     else:
         arr = np.genfromtxt("coarse_age_map.csv",
                         delimiter=",", dtype=str, skip_header=1)
         masses = arr[:,0].astype(float)
         metallicities = arr[:,1].astype(float)
 
-        ## Create archive directories
-        if os.path.exists("grid_LOGSarchive"):
-            shutil.rmtree("grid_LOGSarchive")
-        os.mkdir("grid_LOGSarchive")
-        os.mkdir("grid_LOGSarchive/histories")
-        os.mkdir("grid_LOGSarchive/profiles")
-        os.mkdir("grid_LOGSarchive/gyre")
+    ## Create archive directories
+    if os.path.exists("grid_LOGSarchive"):
+        shutil.rmtree("grid_LOGSarchive")
+    os.mkdir("grid_LOGSarchive")
+    os.mkdir("grid_LOGSarchive/histories")
+    os.mkdir("grid_LOGSarchive/profiles")
+    os.mkdir("grid_LOGSarchive/gyre")
 
-        ## create work directory
-        if os.path.exists("gridwork"):
-            shutil.rmtree("gridwork")
-        os.mkdir("gridwork")
+    ## create work directory
+    if os.path.exists("gridwork"):
+        shutil.rmtree("gridwork")
+    os.mkdir("gridwork")
 
-        ## Run grid
-        # model = 1
-        # for mass, metallicity in zip(masses, metallicities):
-        #     print(f"[b i yellow]Running model {model} of {len(masses)}")
-        #     # name = f"work_{model}"
-        #     name = "test"
+    ## Run grid
+    # model = 1
+    # for mass, metallicity in zip(masses, metallicities):
+    #     print(f"[b i yellow]Running model {model} of {len(masses)}")
+    #     # name = f"work_{model}"
+    #     name = "test"
 
-        #     run_star(mass, metallicity, name)
+    #     run_star(mass, metallicity, name)
 
-        #     model += 1
-        #     print(f"[b i green]Done with model {model-1} of {len(masses)}")
-        #     os.system("clear")
-
-
-        ## Run grid in parallel
-        with Pool(NUM_CORES, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
-            task1 = progress_bar.add_task("[red]Running...", total=len(masses))
-            for _ in pool.starmap(run_star, zip(masses, metallicities, range(len(masses)))):
-                progress_bar.advance(task1)
+    #     model += 1
+    #     print(f"[b i green]Done with model {model-1} of {len(masses)}")
+    #     os.system("clear")
 
 
-
-    
-    
-
-    
+    ## Run grid in parallel
+    n_processes = 2      ## OMP_NUM_THREADS x n_processes = TOTAL CORES AVAILABLE
+    with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
+        task1 = progress_bar.add_task("[red]Running...", total=len(masses))
+        for _ in pool.starmap(run_star, zip(masses, metallicities, range(len(masses)))):
+            progress_bar.advance(task1)
 
