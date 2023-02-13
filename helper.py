@@ -52,7 +52,7 @@ def phases_params(initial_mass, Zinit):
                   
                   'Pre-Main Sequence' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1.3e4,
+                  'max_years_for_timestep' : 1.3e4, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.005, 'delta_lgTeff_hard_limit' : 0.01,
                   'delta_lgL_limit' : 0.02, 'delta_lgL_hard_limit' : 0.05,
                   'write_header_frequency': 10, 'history_interval': 1, 'terminal_interval': 10, 'profile_interval': 50,
@@ -60,21 +60,21 @@ def phases_params(initial_mass, Zinit):
 
                   'Hi-Res Evolution' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1.25e4,
+                  'max_years_for_timestep' : 1.25e4, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.005, 'delta_lgTeff_hard_limit' : 0.01,
                   'delta_lgL_limit' : 0.02, 'delta_lgL_hard_limit' : 0.05,
                   'write_header_frequency': 10, 'history_interval': 15, 'terminal_interval': 15, 'profile_interval': 15},
 
                   'Low-Res Evolution' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 0.75e6,
+                  'max_years_for_timestep' : 0.75e6, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.00015, 'delta_lgTeff_hard_limit' : 0.0015,
                   'delta_lgL_limit' : 0.0005, 'delta_lgL_hard_limit' : 0.005,
                   'write_header_frequency': 4, 'history_interval': 4, 'terminal_interval': 4, 'profile_interval': 4},
 
                   'Late Main Sequence Evolution' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1e8,
+                  'max_years_for_timestep' : 1e8, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.0006, 'delta_lgTeff_hard_limit' : 0.006,
                   'delta_lgL_limit' : 0.002, 'delta_lgL_hard_limit' : 0.02,
                   'write_header_frequency': 1, 'history_interval': 1, 'terminal_interval': 1, 'profile_interval': 1}
@@ -111,7 +111,7 @@ def phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot):
                   
                   'Pre-Main Sequence' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1.3e4,
+                  'max_years_for_timestep' : 1.3e4, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.005, 'delta_lgTeff_hard_limit' : 0.01,
                   'delta_lgL_limit' : 0.02, 'delta_lgL_hard_limit' : 0.05,
                   'write_header_frequency': 10, 'history_interval': 1, 'terminal_interval': 10, 'profile_interval': 50,
@@ -123,7 +123,7 @@ def phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot):
 
                   'Start rotation' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1.25e4,
+                  'max_years_for_timestep' : 1.25e4, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.005, 'delta_lgTeff_hard_limit' : 0.01,
                   'delta_lgL_limit' : 0.02, 'delta_lgL_hard_limit' : 0.05,
                   'write_header_frequency': 10, 'history_interval': 15, 'terminal_interval': 15, 'profile_interval': 15,
@@ -138,7 +138,7 @@ def phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot):
 
                   'Hi-Res Evolution' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1.25e4,
+                  'max_years_for_timestep' : 1.25e4, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.005, 'delta_lgTeff_hard_limit' : 0.01,
                   'delta_lgL_limit' : 0.02, 'delta_lgL_hard_limit' : 0.05,
                   'write_header_frequency': 10, 'history_interval': 15, 'terminal_interval': 15, 'profile_interval': 15,
@@ -150,7 +150,7 @@ def phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot):
 
                   'Low-Res Evolution' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 0.75e6,
+                  'max_years_for_timestep' : 0.75e6, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.00015, 'delta_lgTeff_hard_limit' : 0.0015,
                   'delta_lgL_limit' : 0.0005, 'delta_lgL_hard_limit' : 0.005,
                   'write_header_frequency': 4, 'history_interval': 4, 'terminal_interval': 4, 'profile_interval': 4,
@@ -162,7 +162,7 @@ def phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot):
 
                   'Late Main Sequence Evolution' :
                   {'change_initial_net' : False, 'show_net_species_info' : True, 'show_net_reactions_info' : True,
-                  'max_years_for_timestep' : 1e8,
+                  'max_years_for_timestep' : 1e8, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.0006, 'delta_lgTeff_hard_limit' : 0.006,
                   'delta_lgL_limit' : 0.002, 'delta_lgL_hard_limit' : 0.02,
                   'write_header_frequency': 1, 'history_interval': 1, 'terminal_interval': 1, 'profile_interval': 1,

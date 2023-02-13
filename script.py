@@ -54,8 +54,10 @@ def evo_star(mass, metallicity, ZAMS_surface_v_rot=0, logging=False, loadInlists
 
 
 if __name__ == "__main__":
-    # proj, star = evo_star(mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=1.8, loadInlists=True, logging=True)
+    # np.random.seed(0)
+    # vel = np.random.randint(1, 10) * 30
+    # proj, star = evo_star(mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=False, logging=True)
 
-    ## Run GYRE
-    proj = ProjectOps('dsct')
-    proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="GYRE", files='all', logging=True, parallel=True)
+    # Run GYRE
+    proj = ProjectOps("test")
+    proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=False)
