@@ -27,55 +27,55 @@
 /
 
 
-&mode
-	l = 2
-	m = -2
-/
-&mode
-	l = 2
-	m = -1
-/
-&mode
-	l = 2
-	m = 0
-/
-&mode
-	l = 2
-	m = 1
-/
-&mode
-	l = 2
-	m = 2
-/
+!&mode
+!	l = 2
+!	m = -2
+!/
+!&mode
+!	l = 2
+!	m = -1
+!/
+!&mode
+!	l = 2
+!	m = 0
+!/
+!&mode
+!	l = 2
+!	m = 1
+!/
+!&mode
+!	l = 2
+!	m = 2
+!/
 
-&mode
-	l = 3
-	m = -3
-/
-&mode
-	l = 3
-	m = -2
-/
-&mode
-	l = 3
-	m = -1
-/
-&mode
-	l = 3
-	m = 0
-/
-&mode
-	l = 3
-	m = 1
-/
-&mode
-	l = 3
-	m = 2
-/
-&mode
-	l = 3
-	m = 3
-/
+!&mode
+!	l = 3
+!	m = -3
+!/
+!&mode
+!	l = 3
+!	m = -2
+!/
+!&mode
+!	l = 3
+!	m = -1
+!/
+!&mode
+!	l = 3
+!	m = 0
+!/
+!&mode
+!	l = 3
+!	m = 1
+!/
+!&mode
+!	l = 3
+!	m = 2
+!/
+!&mode
+!	l = 3
+!	m = 3
+!/
 
 
 &osc

@@ -49,9 +49,13 @@ def evo_star(mass, metallicity, ZAMS_surface_v_rot=0, logging=False, loadInlists
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
-            
+    
+    return proj, star
+
+
+if __name__ == "__main__":
+    # proj, star = evo_star(mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=1.8, loadInlists=True, logging=True)
+
     ## Run GYRE
-    proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="GYRE", files='all', logging=logging)
-
-
-evo_star(mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=1.8, loadInlists=True, logging=True)
+    proj = ProjectOps('dsct')
+    proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="GYRE", files='all', logging=True, parallel=True)
