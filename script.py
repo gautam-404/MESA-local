@@ -6,8 +6,8 @@ from MESAcontroller import MesaAccess, ProjectOps
 import helper
 
 
-def evo_star(mass, metallicity, ZAMS_surface_v_rot=0, logging=False, loadInlists=False):
-    name=f"test"
+def evo_star(projName, mass, metallicity, ZAMS_surface_v_rot=0, logging=False, loadInlists=False):
+    name = projName
     proj = ProjectOps(name)     
     proj.create(overwrite=True)             
     proj.make()
@@ -54,10 +54,11 @@ def evo_star(mass, metallicity, ZAMS_surface_v_rot=0, logging=False, loadInlists
 
 
 if __name__ == "__main__":
-    # np.random.seed(0)
-    # vel = np.random.randint(1, 10) * 30
-    # proj, star = evo_star(mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=False, logging=True)
+    projName = "work"
+    np.random.seed(0)
+    vel = np.random.randint(1, 10) * 30
+    proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=True, logging=True)
 
-    # Run GYRE
-    proj = ProjectOps("test")
-    proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=False)
+    # # Run GYRE
+    # proj = ProjectOps(projName)
+    # proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=True)
