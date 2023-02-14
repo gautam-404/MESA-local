@@ -1032,7 +1032,7 @@
       !log_total_rotational_kinetic_energy
       !total_rotational_kinetic_energy_start
       !total_rotational_kinetic_energy_after_adjust_mass
-      total_rotational_kinetic_energy_change
+      !total_rotational_kinetic_energy_change
 
 !----------------------------------------------------------------------------------------------
 
