@@ -520,7 +520,7 @@
       !surf_avg_omega
       !surf_avg_omega_crit
       !surf_avg_omega_div_omega_crit
-      !surf_avg_v_rot ! km/sec rotational velocity at equator
+      surf_avg_v_rot ! km/sec rotational velocity at equator
       !surf_avg_v_crit ! critical rotational velocity at equator
       !surf_avg_v_div_v_crit
       !surf_avg_Lrad_div_Ledd
@@ -1024,15 +1024,15 @@
 
  !# rotation
 
-      !total_angular_momentum
+      total_angular_momentum
       !log_total_angular_momentum
-      !i_rot_total ! moment of inertia
+      i_rot_total ! moment of inertia
 
-      !total_rotational_kinetic_energy
+      total_rotational_kinetic_energy
       !log_total_rotational_kinetic_energy
       !total_rotational_kinetic_energy_start
       !total_rotational_kinetic_energy_after_adjust_mass
-      !total_rotational_kinetic_energy_change
+      total_rotational_kinetic_energy_change
 
 !----------------------------------------------------------------------------------------------
 
