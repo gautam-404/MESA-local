@@ -39,8 +39,8 @@ def evo_star(mass, metallicity, ZAMS_surface_v_rot=0, model=0, logging=False, lo
         for phase_name in helper.phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot).keys():
             print(phase_name)
             star.load_InlistProject(rotation_templates.pop(0))
-            star.set('initial_mass', initial_mass)
-            star.set('initial_z', Zinit)
+            star.set('initial_mass', initial_mass, force=True)
+            star.set('initial_z', Zinit, force=True)
             if phase_name == "Start rotation":
                 star.set('new_surface_rotation_v', ZAMS_surface_v_rot)
             star.set('max_age', phase_max_age.pop(0))
@@ -91,7 +91,9 @@ if __name__ == "__main__":
         shutil.rmtree("gridwork")
     os.mkdir("gridwork")
 
-    testrun = True
+    testrun = False
+    parallel = False
+
     if testrun:
         evo_star(1.6, 0.0065, logging=False)
         # masses = [1.3, 1.35, 1.36]
@@ -102,24 +104,28 @@ if __name__ == "__main__":
         masses = arr[:,0].astype(float)
         metallicities = arr[:,1].astype(float)
 
-    # ## Run grid in parallel
-    # n_processes = 1      ## OMP_NUM_THREADS x n_processes = TOTAL CORES AVAILABLE
-    # with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
-    #     task1 = progress_bar.add_task("[red]Running...", total=len(masses))
-    #     for _ in pool.starmap(evo_star, zip(masses, metallicities, range(len(masses)))):
-    #         progress_bar.advance(task1)
+    if parallel:
+        ## Run grid in parallel
+        n_processes = -(-os.cpu_count() // os.environ['OMP_NUM_THREADS'])  ## Round up
+        # n_processes = 1      ## OMP_NUM_THREADS x n_processes = TOTAL CORES AVAILABLE
+        with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
+            task1 = progress_bar.add_task("[red]Running...", total=len(masses))
+            for _ in pool.starmap(evo_star, zip(masses, metallicities, range(len(masses)))):
+                progress_bar.advance(task1)
+    else:
+        # Run grid in serial
+        model = 1
+        np.random.seed(0)
+        for mass, metallicity in zip(masses, metallicities):
+            print(f"[b i yellow]Running model {model} of {len(masses)}")
+            # name = f"work_{model}"
 
-    # Run grid in serial
-    model = 1
-    np.random.seed(0)
-    for mass, metallicity in zip(masses, metallicities):
-        print(f"[b i yellow]Running model {model} of {len(masses)}")
-        # name = f"work_{model}"
-        
-        vel = np.random.randint(1, 10) * 30
-        evo_star(mass, metallicity, ZAMS_surface_v_rot=vel, model=model, loadInlists=True, logging=True)
+            vel = np.random.randint(1, 10) * 30
+            evo_star(mass, metallicity, ZAMS_surface_v_rot=vel, model=model, loadInlists=True, logging=True)
 
-        model += 1
-        print(f"[b i green]Done with model {model-1} of {len(masses)}")
-        os.system("clear")
+            model += 1
+            print(f"[b i green]Done with model {model-1} of {len(masses)}")
+            os.system("clear")
+
+
 
