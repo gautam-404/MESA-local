@@ -14,8 +14,6 @@
         show_log_description_at_start = .false.
 		
         save_photo_when_terminate = .true.		
-		save_model_when_terminate = .true.
-	    save_model_filename = '15M_at_TAMS.mod' !change this
 
 	!# starting model
 		! load from a photo

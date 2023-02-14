@@ -15,8 +15,7 @@
         show_log_description_at_start = .false.
 
 	!# starting model
-        load_saved_model = .true. ! this allows us to restart from a photo or to load the model. nice.
-        saved_model_name = 'early_evolution.mod' !change this
+		!from photo
 
 	!# modifications to model
 		! none
