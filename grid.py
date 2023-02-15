@@ -66,7 +66,7 @@ def evo_star(mass, metallicity, ZAMS_surface_v_rot=0, model=0, logging=False, lo
 
     ## Archive LOGS
     # os.mkdir(f"grid_archive/gyre/model_{model}")
-    for file in glob.glob("test/LOGS/*"):
+    for file in glob.glob(f"{name}/LOGS/*"):
         if "history_.data" in file:
             shutil.move(file, f"grid_archive/histories/history_{model}.data")
         # elif "profile.index" in file:
