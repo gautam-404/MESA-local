@@ -141,7 +141,7 @@ def phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot):
                   'max_years_for_timestep' : 1.25e4, 'max_model_number': -1,
                   'delta_lgTeff_limit' : 0.005, 'delta_lgTeff_hard_limit' : 0.01,
                   'delta_lgL_limit' : 0.02, 'delta_lgL_hard_limit' : 0.05,
-                  'write_header_frequency': 10, 'history_interval': 15, 'terminal_interval': 15, 'profile_interval': 15,
+                  'write_header_frequency': 4, 'history_interval': 4, 'terminal_interval': 4, 'profile_interval': 4,
                   'set_uniform_am_nu_non_rot' : True,
                   'num_trace_history_values' : 3, 'trace_history_value_name(1)' : 'surf_v_rot',
                   'trace_history_value_name(2)' : 'surf_omega_div_omega_crit',
