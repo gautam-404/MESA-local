@@ -139,7 +139,7 @@ if __name__ == "__main__":
     if parallel:
         ## Run grid in parallel
         ## OMP_NUM_THREADS x n_processes = Total cores available
-        n_processes = -(-os.cpu_count() // os.environ['OMP_NUM_THREADS'])  ## Round up
+        n_processes = -(-os.cpu_count() // int(os.environ['OMP_NUM_THREADS']))  ## Round up
 
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
             task1 = progress_bar.add_task("[red]Running...", total=len(masses))
