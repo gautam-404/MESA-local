@@ -39,6 +39,14 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
         templates = sorted(glob.glob("./urot/*inlist*"))
         # phase_max_age = [1.0E-3, 0.25E6, 1E6, coarse_age, 4.0E7, terminal_age]
         phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
+        rotation_init_params = {'change_v_flag': True,
+                                'new_v_flag': True,
+                                'change_rotation_flag': True,
+                                'new_rotation_flag': True,
+                                'set_initial_surface_rotation_v': True,
+                                'set_surface_rotation_v': True,
+                                'new_surface_rotation_v': v_surf_init,
+                                'set_uniform_am_nu_non_rot': True}
     else:
         templates = sorted(glob.glob("./inlists/*inlist*"))
         phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
@@ -68,14 +76,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             if phase_name == "Initial Contraction":
                 if rotation:
                     ## Initiate rotation
-                    star.set('change_v_flag', True)
-                    star.set('new_v_flag', True)
-                    star.set('change_rotation_flag', True)
-                    star.set('new_rotation_flag', True)
-                    star.set('set_initial_surface_rotation_v', True)
-                    star.set('set_surface_rotation_v', True)
-                    star.set('new_surface_rotation_v', v_surf_init)
-                    star.set('set_uniform_am_nu_non_rot', True)
+                    star.set(rotation_init_params, force=True)
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
