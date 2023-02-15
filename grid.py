@@ -120,21 +120,21 @@ if __name__ == "__main__":
             coarse_age_list = [age*1E6 if age != 0 else 20*1E6 for age in arr[:,2].astype(float)]
             v_surf_init_list = np.random.randint(1, 10, len(masses)) * 30
 
-        ## Create archive directories
-        if os.path.exists("grid_archive"):
-            shutil.rmtree("grid_archive")
-        os.mkdir("grid_archive")
-        os.mkdir("grid_archive/models")
-        os.mkdir("grid_archive/histories")
-        os.mkdir("grid_archive/profiles")
-        os.mkdir("grid_archive/gyre")
+    ## Create archive directories
+    if os.path.exists("grid_archive"):
+        shutil.rmtree("grid_archive")
+    os.mkdir("grid_archive")
+    os.mkdir("grid_archive/models")
+    os.mkdir("grid_archive/histories")
+    os.mkdir("grid_archive/profiles")
+    os.mkdir("grid_archive/gyre")
 
-        ## Create work directory
-        old = 0
-        while os.path.exists("gridwork"):
-            shutil.move("gridwork", f"gridwork_old{old}")
-            old += 1
-        os.mkdir("gridwork")
+    ## Create work directory
+    old = 0
+    while os.path.exists("gridwork"):
+        shutil.move("gridwork", f"gridwork_old{old}")
+        old += 1
+    os.mkdir("gridwork")
 
     if parallel:
         ## Run grid in parallel
