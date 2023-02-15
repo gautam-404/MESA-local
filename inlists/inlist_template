@@ -119,8 +119,6 @@
 	!# miscellaneous controls
 
 	warn_when_large_rel_run_E_err = 99d0
-
-	Pextra_factor = 1.0 ! Higher number helps with convergence
 	
 
 	! Convergence checking
