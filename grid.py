@@ -144,7 +144,7 @@ if __name__ == "__main__":
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
             task1 = progress_bar.add_task("[red]Running...", total=len(masses))
             for _ in pool.starmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                                    range(len(masses)), repeat(True), repeat(True), repeat(True), repeat(True))):
+                                    range(len(masses)), repeat(True), repeat(True), repeat(False), repeat(True))):
                                     ##  model,          rotation,     save_model,   loadInlists,  logging
                 progress_bar.advance(task1)
     else:
@@ -157,7 +157,7 @@ if __name__ == "__main__":
 
             velocity = np.random.randint(1, 10) * 30
             evo_star(mass, metallicity, coarse_age, ZAMS_surface_v_rot=velocity, model=model, 
-                        rotation=True, save_model=True, loadInlists=True, logging=True)
+                        rotation=True, save_model=True, loadInlists=False, logging=True)
 
             model += 1
             print(f"[b i green]Done with model {model-1} of {len(masses)}")
