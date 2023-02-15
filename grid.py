@@ -6,7 +6,7 @@ from multiprocessing.pool import Pool
 from itertools import repeat
 
 import numpy as np
-from MESAcontroller import MesaAccess, ProjectOps
+from MESAcontroller import MesaAccess, ProjectOps, istarmap
 from rich import print, progress, prompt
 
 progress_columns = (progress.SpinnerColumn(spinner_name="moon"),
@@ -148,17 +148,20 @@ if __name__ == "__main__":
                 old += 1
     os.mkdir("gridwork")
 
+
+    ## Run grid ##
+
     if parallel:
         ## Run grid in parallel
         ## OMP_NUM_THREADS x n_processes = Total cores available
         n_processes = -(-os.cpu_count() // int(os.environ['OMP_NUM_THREADS']))  ## Round up
 
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
-            task1 = progress_bar.add_task("[red]Running...", total=len(masses))
-            for _ in pool.starmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
+            task = progress_bar.add_task("[red]Running...", total=len(masses))
+            for _ in pool.istarmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
                                     range(len(masses)), repeat(True), repeat(True), repeat(False), repeat(True))):
                                     ##  model,          rotation,     save_model,   loadInlists,  logging
-                progress_bar.advance(task1)
+                progress_bar.advance(task)
     else:
         # Run grid in serial
         model = 1
