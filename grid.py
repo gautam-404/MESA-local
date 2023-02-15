@@ -7,7 +7,7 @@ from itertools import repeat
 
 import numpy as np
 from MESAcontroller import MesaAccess, ProjectOps
-from rich import print, progress
+from rich import print, progress, prompt
 
 progress_columns = (progress.SpinnerColumn(spinner_name="moon"),
                     progress.MofNCompleteColumn(),
@@ -122,7 +122,14 @@ if __name__ == "__main__":
 
     ## Create archive directories
     if os.path.exists("grid_archive"):
-        shutil.rmtree("grid_archive")
+        if prompt.Confirm("Grid_archive already exists. Overwrite? (y/n): "):
+            shutil.rmtree("grid_archive")
+        else:
+            print("Moving old grid_archive(s) to grid_archive_old(:)")
+            old = 0
+            while os.path.exists("grid_archive"):
+                shutil.move("grid_archive", f"grid_archive_old{old}")
+                old += 1
     os.mkdir("grid_archive")
     os.mkdir("grid_archive/models")
     os.mkdir("grid_archive/histories")
@@ -130,10 +137,15 @@ if __name__ == "__main__":
     os.mkdir("grid_archive/gyre")
 
     ## Create work directory
-    old = 0
-    while os.path.exists("gridwork"):
-        shutil.move("gridwork", f"gridwork_old{old}")
-        old += 1
+    if os.path.exists("gridwork"):
+        if prompt.Confirm("Gridwork already exists. Overwrite? (y/n): "):
+            shutil.rmtree("gridwork")
+        else:
+            print("Moving old gridwork(s) to gridwork_old(:)")
+            old = 0
+            while os.path.exists("gridwork"):
+                shutil.move("gridwork", f"gridwork_old{old}")
+                old += 1
     os.mkdir("gridwork")
 
     if parallel:
