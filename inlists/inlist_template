@@ -96,7 +96,7 @@
 
 	!# timestep controls
 
-	max_timestep = 3.15d13  
+	!max_timestep = 3.15d13  
 
 	!limit on magnitude of relative change at any grid point
 	delta_lgTeff_limit = 0.005

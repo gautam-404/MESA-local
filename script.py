@@ -58,6 +58,8 @@ if __name__ == "__main__":
     np.random.seed(0)
     vel = np.random.randint(1, 10) * 30
     proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=True, logging=True)
+    projName = "work"
+    proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=False, logging=True)
 
     # # Run GYRE
     # proj = ProjectOps(projName)
