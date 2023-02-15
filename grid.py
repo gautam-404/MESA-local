@@ -157,6 +157,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
         ## Run grid in parallel
         ## OMP_NUM_THREADS x n_processes = Total cores available
         n_processes = -(-os.cpu_count() // int(os.environ['OMP_NUM_THREADS']))  ## Round up
+        n_processes -= 1 ## Better utilization of cores
 
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
             task = progress_bar.add_task("[red]Running...", total=len(masses))
