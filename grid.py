@@ -123,7 +123,7 @@ if __name__ == "__main__":
 
     ## Create archive directories
     if os.path.exists("grid_archive"):
-        if prompt.Confirm("Grid_archive already exists. Overwrite? (y/n): "):
+        if prompt.Confirm.ask("Grid_archive already exists. Overwrite?"):
             shutil.rmtree("grid_archive")
         else:
             print("Moving old grid_archive(s) to grid_archive_old(:)")
@@ -139,7 +139,7 @@ if __name__ == "__main__":
 
     ## Create work directory
     if os.path.exists("gridwork"):
-        if prompt.Confirm("Gridwork already exists. Overwrite? (y/n): "):
+        if prompt.Confirm.ask("Gridwork already exists. Overwrite?"):
             shutil.rmtree("gridwork")
         else:
             print("Moving old gridwork(s) to gridwork_old(:)")
