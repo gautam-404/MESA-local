@@ -49,9 +49,9 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             star.load_InlistProject(templates.pop(0))
             star.set('initial_mass', initial_mass, force=True)
             star.set('initial_z', Zinit, force=True)
-            if phase_name == "Start rotation":
-                star.set('new_surface_rotation_v', ZAMS_surface_v_rot)
             star.set('max_age', phase_max_age.pop(0))
+            if phase_name == "Start rotation":
+                star.set('new_surface_rotation_v', v_surf_init)
             if phase_name == "Initial Contraction":
                 proj.run(logging=logging)
             else:
@@ -79,8 +79,9 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             else:
                 proj.resume(logging=logging)
 
-    # ## Run GYRE
-    # proj.runGyre(gyre_in="./inlists/gyre_template.in", files='all', logging=logging)
+    # # Run GYRE
+    # proj = ProjectOps(projName)
+    # proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=True)
 
     ## Archive LOGS
     os.mkdir(f"grid_archive/gyre/freqs_{model}")
@@ -166,12 +167,9 @@ if __name__ == "__main__":
         # Run grid in serial
         model = 1
         np.random.seed(0)
-        for mass, metallicity, coarse_age in zip(masses, metallicities, coarse_age_list):
+        for mass, metallicity, v_surf_init, coarse_age in zip(masses, metallicities, v_surf_init_list, coarse_age_list):
             print(f"[b i yellow]Running model {model} of {len(masses)}")
-            # name = f"work_{model}"
-
-            velocity = np.random.randint(1, 10) * 30
-            evo_star(mass, metallicity, coarse_age, ZAMS_surface_v_rot=velocity, model=model, 
+            evo_star(mass, metallicity, coarse_age, v_surf_init, model=model, 
                         rotation=True, save_model=True, loadInlists=False, logging=True)
 
             model += 1
