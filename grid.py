@@ -97,7 +97,8 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
     shutil.rmtree(name)
     
 
-def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, loadInlists=False, logging=True, testrun=False):
+def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, 
+            loadInlists=False, logging=True, overwrite=None, testrun=False):
     if testrun:
         masses = [1.36, 1.36, 1.36, 1.36, 1.36]
         metallicities = [0.001, 0.001, 0.001, 0.001, 0.001]
@@ -109,7 +110,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, l
             masses = np.arange(1.36, 2.22, 0.02)                ## 1.36 - 2.20 Msun (0.02 Msun step)
             metallicities = np.arange(0.001, 0.0101, 0.0001)    ## 0.001 - 0.010 (0.0001 step)
             coarse_age_list = 1E6 * np.ones(len(masses))               ## 1E6 yr
-            v_surf_init_list = np.random.randint(1, 10, len(masses)) * 30
+            v_surf_init_list = np.random.randint(1, 10, len(masses)).astype(float) * 30
         else:
             ## Load grid
             arr = np.genfromtxt("coarse_age_map.csv",
@@ -117,18 +118,27 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, l
             masses = arr[:,0].astype(float)
             metallicities = arr[:,1].astype(float)
             coarse_age_list = [age*1E6 if age != 0 else 20*1E6 for age in arr[:,2].astype(float)]
-            v_surf_init_list = np.random.randint(1, 10, len(masses)) * 30
+            v_surf_init_list = np.random.randint(1, 10, len(masses)).astype(float) * 30
 
     ## Create archive directories
     if os.path.exists("grid_archive"):
-        if prompt.Confirm.ask("Grid_archive already exists. Overwrite?"):
+        if overwrite:
             shutil.rmtree("grid_archive")
         else:
-            print("Moving old grid_archive(s) to grid_archive_old(:)")
-            old = 0
-            while os.path.exists("grid_archive"):
-                shutil.move("grid_archive", f"grid_archive_old{old}")
-                old += 1
+            if overwrite is None:
+                if prompt.Confirm.ask("Overwrite existing grid_archive?"):
+                    shutil.rmtree("grid_archive")
+            if os.path.exists("grid_archive"):
+                print("Moving old grid_archive(s) to grid_archive_old(:)")
+                old = 0
+                while os.path.exists(f"grid_archive_old{old}"):
+                    old += 1
+                    if old >= 3:
+                        break
+                while old > 0:
+                    shutil.move(f"grid_archive_old{old-1}", f"grid_archive_old{old}")
+                    old -= 1
+                shutil.move("grid_archive", f"grid_archive_old{old}")    
     os.mkdir("grid_archive")
     os.mkdir("grid_archive/models")
     os.mkdir("grid_archive/histories")
@@ -137,14 +147,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, l
 
     ## Create work directory
     if os.path.exists("gridwork"):
-        if prompt.Confirm.ask("Gridwork already exists. Overwrite?"):
-            shutil.rmtree("gridwork")
-        else:
-            print("Moving old gridwork(s) to gridwork_old(:)")
-            old = 0
-            while os.path.exists("gridwork"):
-                shutil.move("gridwork", f"gridwork_old{old}")
-                old += 1
+        shutil.rmtree("gridwork")
     os.mkdir("gridwork")
 
 
@@ -175,7 +178,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, l
 ## Main script
 if __name__ == "__main__":
     # run_grid()
-    run_grid(parallel=False, save_model=True)
+    run_grid(parallel=False, save_model=True, overwrite=False)
 
     
 
