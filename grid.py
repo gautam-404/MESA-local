@@ -2,8 +2,9 @@ import glob
 import os
 import shutil
 import sys
-from multiprocessing.pool import Pool
+import tarfile
 from itertools import repeat
+from multiprocessing.pool import Pool
 
 import numpy as np
 from MESAcontroller import MesaAccess, ProjectOps, istarmap
@@ -33,11 +34,19 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
     Zinit = metallicity
 
     terminal_age = float(np.round(2500/initial_mass**2.5,1)*1.0E6)
-    phases_params = helper.phases_params(initial_mass, Zinit)
+    phases_params = helper.phases_params(initial_mass, Zinit)     
     if rotation:
         templates = sorted(glob.glob("./urot/*inlist*"))
         # phase_max_age = [1.0E-3, 0.25E6, 1E6, coarse_age, 4.0E7, terminal_age]
         phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
+        rotation_init_params = {'change_v_flag': True,
+                                'new_v_flag': True,
+                                'change_rotation_flag': True,
+                                'new_rotation_flag': True,
+                                'set_initial_surface_rotation_v': True,
+                                'set_surface_rotation_v': True,
+                                'new_surface_rotation_v': v_surf_init,
+                                'set_uniform_am_nu_non_rot': True}
     else:
         templates = sorted(glob.glob("./inlists/*inlist*"))
         phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
@@ -67,14 +76,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             if phase_name == "Initial Contraction":
                 if rotation:
                     ## Initiate rotation
-                    star.set('change_v_flag', True)
-                    star.set('new_v_flag', True)
-                    star.set('change_rotation_flag', True)
-                    star.set('new_rotation_flag', True)
-                    star.set('set_initial_surface_rotation_v', True)
-                    star.set('set_surface_rotation_v', True)
-                    star.set('new_surface_rotation_v', v_surf_init)
-                    star.set('set_uniform_am_nu_non_rot', True) ##sets the angular momentum diffusion to its high default value for uniform rot.
+                    star.set(rotation_init_params)
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
@@ -90,16 +92,13 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
     for file in glob.glob(f"{name}/LOGS/*-freqs.dat"):
         shutil.copy(file, f"grid_archive/gyre/freqs_{model}")
     if save_model:
-        shutil.copytree(name, f"grid_archive/models/model_{model}")
+        compressed_file = f"grid_archive/models/model_{model}.tar.gz"
+        with tarfile.open(compressed_file,"w:gz") as tarhandle:
+            tarhandle.add(name, arcname=os.path.basename(name))
     shutil.rmtree(name)
+    
 
-
-## Main script
-if __name__ == "__main__":
-    testrun = True
-    parallel = True
-    create_grid = False
-
+def run_grid(parallel=False, create_grid=False, rotation=True, save_model=True, loadInlists=False, logging=True, testrun=False):
     if testrun:
         masses = [1.36, 1.36, 1.36, 1.36, 1.36]
         metallicities = [0.001, 0.001, 0.001, 0.001, 0.001]
@@ -175,4 +174,11 @@ if __name__ == "__main__":
             model += 1
             print(f"[b i green]Done with model {model-1} of {len(masses)}")
             os.system("clear")
+
+## Main script
+if __name__ == "__main__":
+    # run_grid()
+    run_grid(parallel=False, save_model=True)
+
+    
 
