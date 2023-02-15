@@ -6,7 +6,7 @@ from MESAcontroller import MesaAccess, ProjectOps
 import helper
 
 
-def evo_star(projName, mass, metallicity, ZAMS_surface_v_rot=0, logging=False, loadInlists=False):
+def evo_star(projName, mass, metallicity, coarse_age, ZAMS_surface_v_rot=0, rotation=True, logging=False, loadInlists=False):
     name = projName
     proj = ProjectOps(name)     
     proj.create(overwrite=True)             
@@ -18,16 +18,22 @@ def evo_star(projName, mass, metallicity, ZAMS_surface_v_rot=0, logging=False, l
     initial_mass = mass
     Zinit = metallicity
 
-    phases_params = helper.phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot)
     terminal_age = float(np.round(2500/initial_mass**2.5,1)*1.0E6)
-    phase_max_age = [1.0E-3, 0.25E6, 1E6, 1E7, 4.0E7, terminal_age]
+    phases_params = helper.phases_params(initial_mass, Zinit)
+    if rotation:
+        templates = sorted(glob.glob("./urot/*inlist*"))
+        # phase_max_age = [1.0E-3, 0.25E6, 1E6, coarse_age, 4.0E7, terminal_age]
+        phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
+    else:
+        templates = sorted(glob.glob("./inlists/*inlist*"))
+        phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
+
 
     if loadInlists:
         ## Run MESA from pre-made inlists
-        rotation_templates = sorted(glob.glob("./urot/*inlist*"))
-        for phase_name in helper.phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot).keys():
+        for phase_name in phases_params.keys():
             print(phase_name)
-            star.load_InlistProject(rotation_templates.pop(0))
+            star.load_InlistProject(templates.pop(0))
             star.set('initial_mass', initial_mass)
             star.set('initial_z', Zinit)
             if phase_name == "Start rotation":
@@ -46,6 +52,16 @@ def evo_star(projName, mass, metallicity, ZAMS_surface_v_rot=0, logging=False, l
             star.set(input_params, force=True)
             star.set('max_age', phase_max_age.pop(0))
             if phase_name == "Initial Contraction":
+                if rotation:
+                    ## Initiate rotation
+                    star.set('change_v_flag', True)
+                    star.set('new_v_flag', True)
+                    star.set('change_rotation_flag', True)
+                    star.set('new_rotation_flag', True)
+                    star.set('set_initial_surface_rotation_v', True)
+                    star.set('set_surface_rotation_v', True)
+                    star.set('new_surface_rotation_v', 50)
+                    star.set('set_uniform_am_nu_non_rot', True) ##sets the angular momentum diffusion to its high default value for uniform rot.
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
@@ -54,12 +70,14 @@ def evo_star(projName, mass, metallicity, ZAMS_surface_v_rot=0, logging=False, l
 
 
 if __name__ == "__main__":
-    projName = "test"
+    projName = "test2"
     np.random.seed(0)
     vel = np.random.randint(1, 10) * 30
-    proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=True, logging=True)
-    projName = "work"
-    proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, ZAMS_surface_v_rot=vel, loadInlists=False, logging=True)
+    proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, coarse_age=1.0E7,
+                ZAMS_surface_v_rot=vel, rotation=True, loadInlists=False, logging=True)
+    # projName = "work"
+    # proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, coarse_age=1.0E7,
+    #             ZAMS_surface_v_rot=vel, loadInlists=False, logging=True)
 
     # # Run GYRE
     # proj = ProjectOps(projName)
