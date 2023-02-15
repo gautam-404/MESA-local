@@ -158,8 +158,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, l
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
             task = progress_bar.add_task("[red]Running...", total=len(masses))
             for _ in pool.istarmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                                    range(len(masses)), repeat(True), repeat(True), repeat(False), repeat(True))):
-                                    ##  model,          rotation,     save_model,   loadInlists,  logging
+                            range(len(masses)), repeat(rotation), repeat(save_model), repeat(loadInlists), repeat(logging))):
                 progress_bar.advance(task)
     else:
         # Run grid in serial
@@ -168,7 +167,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, l
         for mass, metallicity, v_surf_init, coarse_age in zip(masses, metallicities, v_surf_init_list, coarse_age_list):
             print(f"[b i yellow]Running model {model} of {len(masses)}")
             evo_star(mass, metallicity, coarse_age, v_surf_init, model=model, 
-                        rotation=True, save_model=True, loadInlists=False, logging=True)
+                        rotation=rotation, save_model=save_model, loadInlists=loadInlists, logging=logging)
 
             model += 1
             print(f"[b i green]Done with model {model-1} of {len(masses)}")
