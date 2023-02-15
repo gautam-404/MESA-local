@@ -21,7 +21,7 @@ import helper
 def mute():
     sys.stdout = open(os.devnull, 'w') 
 
-def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, save_model=False, logging=False, loadInlists=False):
+def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, save_model=False, logging=True, loadInlists=False):
     name = f"gridwork/work_{model}"
     proj = ProjectOps(name)     
     proj.create(overwrite=True)             
@@ -101,10 +101,10 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
 def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, 
             loadInlists=False, logging=True, overwrite=None, testrun=False):
     if testrun:
-        masses = [1.36, 1.36, 1.36, 1.36, 1.36]
-        metallicities = [0.001, 0.001, 0.001, 0.001, 0.001]
-        coarse_age_list = [1E6, 1E6, 1E6, 1E6, 1E6]
-        v_surf_init_list = [10, 20, 30, 40, 50]
+        masses = [1.36, 1.36, 1.36, 1.36, 1.36, 1.36]
+        metallicities = [0.001, 0.001, 0.001, 0.001, 0.001, 0.001]
+        coarse_age_list = [1E6, 1E6, 1E6, 1E6, 1E6, 1E6]
+        v_surf_init_list = [0.1, 1, 5, 10, 15, 20]
     else:
         if create_grid:
             ## Create grid
@@ -159,9 +159,11 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
         n_processes = os.cpu_count() // (int(os.environ['OMP_NUM_THREADS'])+1)   ## Gives best performance
 
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
-            task = progress_bar.add_task("[red]Running...", total=len(masses))
+            length = len(masses)
+            task = progress_bar.add_task("[red]Running...", total=length)
             for _ in pool.istarmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                            range(len(masses)), repeat(rotation), repeat(save_model), repeat(loadInlists), repeat(logging))):
+                            range(length), repeat(rotation, length), repeat(save_model, length), 
+                            repeat(loadInlists, length), repeat(logging, length))):
                 progress_bar.advance(task)
     else:
         # Run grid in serial
@@ -179,7 +181,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
 ## Main script
 if __name__ == "__main__":
     # run_grid()
-    run_grid(parallel=False, save_model=True, overwrite=False, testrun=True)
+    run_grid(parallel=True, save_model=True, overwrite=True, testrun=True)
 
     
 
