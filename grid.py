@@ -76,7 +76,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             if phase_name == "Initial Contraction":
                 if rotation:
                     ## Initiate rotation
-                    star.set(rotation_init_params)
+                    star.set(rotation_init_params, force=True)
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
@@ -98,7 +98,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
     shutil.rmtree(name)
     
 
-def run_grid(parallel=False, create_grid=False, rotation=True, save_model=True, loadInlists=False, logging=True, testrun=False):
+def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, loadInlists=False, logging=True, testrun=False):
     if testrun:
         masses = [1.36, 1.36, 1.36, 1.36, 1.36]
         metallicities = [0.001, 0.001, 0.001, 0.001, 0.001]
@@ -150,7 +150,6 @@ def run_grid(parallel=False, create_grid=False, rotation=True, save_model=True, 
 
 
     ## Run grid ##
-
     if parallel:
         ## Run grid in parallel
         ## OMP_NUM_THREADS x n_processes = Total cores available
