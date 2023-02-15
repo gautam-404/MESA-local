@@ -20,7 +20,7 @@ def evo_star(projName, mass, metallicity, ZAMS_surface_v_rot=0, logging=False, l
 
     phases_params = helper.phases_params_rotation(initial_mass, Zinit, ZAMS_surface_v_rot)
     terminal_age = float(np.round(2500/initial_mass**2.5,1)*1.0E6)
-    phase_max_age = [1.0E-3, 1.0E6, 1.5E6, 2.0E7, 4.0E7, terminal_age]
+    phase_max_age = [1.0E-3, 1E7, 1.05E7, 1.5E7, 4.0E7, terminal_age]
 
     if loadInlists:
         ## Run MESA from pre-made inlists
