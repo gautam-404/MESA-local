@@ -20,7 +20,7 @@ import helper
 def mute():
     sys.stdout = open(os.devnull, 'w') 
 
-def evo_star(mass, metallicity, coarse_age, ZAMS_surface_v_rot=0, model=0, rotation=True, save_model=False, logging=False, loadInlists=False):
+def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, save_model=False, logging=False, loadInlists=False):
     name = f"gridwork/work_{model}"
     proj = ProjectOps(name)     
     proj.create(overwrite=True)             
@@ -73,7 +73,7 @@ def evo_star(mass, metallicity, coarse_age, ZAMS_surface_v_rot=0, model=0, rotat
                     star.set('new_rotation_flag', True)
                     star.set('set_initial_surface_rotation_v', True)
                     star.set('set_surface_rotation_v', True)
-                    star.set('new_surface_rotation_v', 0)
+                    star.set('new_surface_rotation_v', v_surf_init)
                     star.set('set_uniform_am_nu_non_rot', True) ##sets the angular momentum diffusion to its high default value for uniform rot.
                 proj.run(logging=logging)
             else:
@@ -95,13 +95,31 @@ def evo_star(mass, metallicity, coarse_age, ZAMS_surface_v_rot=0, model=0, rotat
 
 ## Main script
 if __name__ == "__main__":
-    testrun = False
-    parallel = False
+    testrun = True
+    parallel = True
     create_grid = False
 
     if testrun:
-        evo_star(1.6, 0.0065, logging=False)
+        masses = [1.36, 1.36, 1.36, 1.36, 1.36]
+        metallicities = [0.001, 0.001, 0.001, 0.001, 0.001]
+        coarse_age_list = [1E6, 1E6, 1E6, 1E6, 1E6]
+        v_surf_init_list = [10, 20, 30, 40, 50]
     else:
+        if create_grid:
+            ## Create grid
+            masses = np.arange(1.36, 2.22, 0.02)                ## 1.36 - 2.20 Msun (0.02 Msun step)
+            metallicities = np.arange(0.001, 0.0101, 0.0001)    ## 0.001 - 0.010 (0.0001 step)
+            coarse_age_list = 1E6 * np.ones(len(masses))               ## 1E6 yr
+            v_surf_init_list = np.random.randint(1, 10, len(masses)) * 30
+        else:
+            ## Load grid
+            arr = np.genfromtxt("coarse_age_map.csv",
+                            delimiter=",", dtype=str, skip_header=1)
+            masses = arr[:,0].astype(float)
+            metallicities = arr[:,1].astype(float)
+            coarse_age_list = [age*1E6 if age != 0 else 20*1E6 for age in arr[:,2].astype(float)]
+            v_surf_init_list = np.random.randint(1, 10, len(masses)) * 30
+
         ## Create archive directories
         if os.path.exists("grid_archive"):
             shutil.rmtree("grid_archive")
@@ -118,19 +136,6 @@ if __name__ == "__main__":
             old += 1
         os.mkdir("gridwork")
 
-        if create_grid:
-            ## Create grid
-            masses = np.arange(1.36, 2.22, 0.02)                ## 1.36 - 2.20 Msun (0.02 Msun step)
-            metallicities = np.arange(0.001, 0.0101, 0.0001)    ## 0.001 - 0.010 (0.0001 step)
-            coarse_age_list = 1E6 * np.ones(len(masses))               ## 1E6 yr
-        else:
-            ## Load grid
-            arr = np.genfromtxt("coarse_age_map.csv",
-                            delimiter=",", dtype=str, skip_header=1)
-            masses = arr[:,0].astype(float)
-            metallicities = arr[:,1].astype(float)
-            coarse_age_list = [age*1E6 if age != 0 else 20*1E6 for age in arr[:,2].astype(float)]
-
     if parallel:
         ## Run grid in parallel
         ## OMP_NUM_THREADS x n_processes = Total cores available
@@ -138,8 +143,7 @@ if __name__ == "__main__":
 
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
             task1 = progress_bar.add_task("[red]Running...", total=len(masses))
-            velocity_list = np.random.randint(1, 10, len(masses)) * 30
-            for _ in pool.starmap(evo_star, zip(masses, metallicities, coarse_age_list, velocity_list,
+            for _ in pool.starmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
                                     range(len(masses)), repeat(True), repeat(True), repeat(True), repeat(True))):
                                     ##  model,          rotation,     save_model,   loadInlists,  logging
                 progress_bar.advance(task1)
