@@ -179,7 +179,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
 ## Main script
 if __name__ == "__main__":
     # run_grid()
-    run_grid(parallel=False, save_model=True, overwrite=False)
+    run_grid(parallel=False, save_model=True, overwrite=False, testrun=True)
 
     
 
