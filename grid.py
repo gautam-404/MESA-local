@@ -21,14 +21,15 @@ import helper
 def mute():
     sys.stdout = open(os.devnull, 'w') 
 
-def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, save_model=False, logging=True, loadInlists=False):
+def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, 
+            save_model=False, logging=True, loadInlists=False):
     name = f"gridwork/work_{model}"
     proj = ProjectOps(name)     
     proj.create(overwrite=True)             
     proj.make()
     star = MesaAccess(name)
-    star.load_HistoryColumns("./inlists/history_columns.list")
-    star.load_ProfileColumns("./inlists/profile_columns.list")
+    star.load_HistoryColumns("./templates/history_columns.list")
+    star.load_ProfileColumns("./templates/profile_columns.list")
 
     initial_mass = mass
     Zinit = metallicity
@@ -67,7 +68,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
                 proj.resume(logging=logging)
     else:
         ## Run MESA from inlist template by setting parameters for each phase
-        inlist_template = "./inlists/inlist_template"
+        inlist_template = "./templates/inlist_template"
         for phase_name, input_params in phases_params.items():
             print(phase_name)
             star.load_InlistProject(inlist_template)
@@ -81,9 +82,12 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             else:
                 proj.resume(logging=logging)
 
-    # # Run GYRE
-    # proj = ProjectOps(projName)
-    # proj.runGyre(gyre_in="urot/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=True)
+    # Run GYRE
+    proj = ProjectOps(name)
+    proj.runGyre(gyre_in="templates/gyre_rot_template_dipole.in", data_format="FGONG", files='all', logging=True, parallel=True)
+    # proj.runGyre(gyre_in="templates/gyre_rot_template_l2.in", data_format="FGONG", files='all', logging=True, parallel=True)
+    # proj.runGyre(gyre_in="templates/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=True)
+
 
     ## Archive LOGS
     os.mkdir(f"grid_archive/gyre/freqs_{model}")
@@ -97,6 +101,8 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             tarhandle.add(name, arcname=os.path.basename(name))
     shutil.rmtree(name)
     
+
+
 
 def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, 
             loadInlists=False, logging=True, overwrite=None, testrun=False):
@@ -161,9 +167,9 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
         with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
             length = len(masses)
             task = progress_bar.add_task("[red]Running...", total=length)
-            for _ in pool.istarmap(evo_star, zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                            range(length), repeat(rotation, length), repeat(save_model, length), 
-                            repeat(loadInlists, length), repeat(logging, length))):
+            args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
+                        range(length), [rotation]*length, [save_model]*length, [logging]*length, [loadInlists]*length)
+            for _ in pool.istarmap(evo_star, args, chunksize=1):
                 progress_bar.advance(task)
     else:
         # Run grid in serial
@@ -172,7 +178,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
         for mass, metallicity, v_surf_init, coarse_age in zip(masses, metallicities, v_surf_init_list, coarse_age_list):
             print(f"[b i yellow]Running model {model} of {len(masses)}")
             evo_star(mass, metallicity, coarse_age, v_surf_init, model=model, 
-                        rotation=rotation, save_model=save_model, loadInlists=loadInlists, logging=logging)
+                        rotation=rotation, save_model=save_model, logging=logging, loadInlists=loadInlists)
 
             model += 1
             print(f"[b i green]Done with model {model-1} of {len(masses)}")
