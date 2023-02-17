@@ -2,7 +2,7 @@ import glob
 import multiprocessing as mp
 import threading
 import time
-import os
+import os, sys
 import shutil
 import tarfile
 from itertools import repeat
@@ -37,8 +37,8 @@ def update_live_display(live_disp, progressbar, group, n, stop=False):
             live_disp.update(group, refresh=True)
             if stop is True:
                 break
-    except KeyboardInterrupt or SystemExit:
-        pass
+    except KeyboardInterrupt:
+        raise KeyboardInterrupt
 
 
     
@@ -188,12 +188,12 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
 
         live_disp, progressbar, group = live_display(n_processes)
         with live_disp:
-                length = len(masses)
-                task = progressbar.add_task("[b i green]Running...", total=length)
-                args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                        range(length), repeat(rotation), repeat(save_model), 
-                        repeat(logging), repeat(loadInlists))
-
+            length = len(masses)
+            task = progressbar.add_task("[b i green]Running...", total=length)
+            args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
+                    range(length), repeat(rotation), repeat(save_model), 
+                    repeat(logging), repeat(loadInlists))
+            try:
                 stop_thread = False
                 thread = threading.Thread(target=update_live_display, 
                             args=(live_disp, progressbar, group, n_processes, lambda : stop_thread,))
@@ -203,6 +203,10 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
                         progressbar.advance(task)
                 stop_thread = True
                 thread.join()
+            except KeyboardInterrupt:
+                print("KeyboardInterrupt")
+                os._exit(1)
+                
     else:
         # Run grid in serial
         model = 1

@@ -102,35 +102,32 @@ def unmute():
     sys.stdout = sys.__stdout__
 
 def scrap_age(n):
-    try:
-        text = "\n"
-        for i in range(n):
-            logfile = f"gridwork/work_{i}/run.log"
-            age = None
-            old_age = 0
-            if os.path.exists(logfile):
-                with open(logfile, "r") as f:
-                    for outline in f:
-                        try:
-                            if outline.split()[-1] in dt_limit_values:
-                                age = float(outline.split()[0])
-                        except:
-                            pass
-            if age is not None:
-                if age != old_age:
-                    old_age = age
-                    if age < 1/365:
-                        age_str = f"[b]Age: [cyan]{age*365*24:.4f}[/cyan] hours"
-                    elif 1/365 < age < 1:
-                        age_str = f"[b]Age: [cyan]{age*365:.4f}[/cyan] days"
-                    elif 1 < age < 1000:
-                        age_str = f"[b]Age: [cyan]{age:.3f}[/cyan] years"
-                    else:
-                        age_str = f"[b]Age: [cyan]{age:.3e}[/cyan] years"
-                    text += f"[b i]Model[/b i] [magenta]{i}[/magenta] [yellow]----->[/yellow] {age_str}\n"
-            else:
-                text += f"[b i]Model[/b i] [magenta]{i}[/magenta] [yellow]----->[/yellow] Running...\n"
-        # print(text)
-        return text
-    except KeyboardInterrupt or SystemExit:
-        pass
+    text = "\n"
+    for i in range(n):
+        logfile = f"gridwork/work_{i}/run.log"
+        age = None
+        old_age = 0
+        if os.path.exists(logfile):
+            with open(logfile, "r") as f:
+                for outline in f:
+                    try:
+                        if outline.split()[-1] in dt_limit_values:
+                            age = float(outline.split()[0])
+                    except:
+                        pass
+        if age is not None:
+            if age != old_age:
+                old_age = age
+                if age < 1/365:
+                    age_str = f"[b]Age: [cyan]{age*365*24:.4f}[/cyan] hours"
+                elif 1/365 < age < 1:
+                    age_str = f"[b]Age: [cyan]{age*365:.4f}[/cyan] days"
+                elif 1 < age < 1000:
+                    age_str = f"[b]Age: [cyan]{age:.3f}[/cyan] years"
+                else:
+                    age_str = f"[b]Age: [cyan]{age:.3e}[/cyan] years"
+                text += f"[b i]Model[/b i] [magenta]{i}[/magenta] [yellow]----->[/yellow] {age_str}\n"
+        else:
+            text += f"[b i]Model[/b i] [magenta]{i}[/magenta] [yellow]----->[/yellow] Running...\n"
+    # print(text)
+    return text
