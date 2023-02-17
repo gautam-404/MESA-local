@@ -26,8 +26,7 @@ def progress_bar(n):
     progress_columns = (#progress.SpinnerColumn(spinner_name="moon"),
                 progress.MofNCompleteColumn(),
                 *progress.Progress.get_default_columns(),
-                progress.TimeElapsedColumn(),
-                progress.TextColumn("\n\n"))
+                progress.TimeElapsedColumn())
     progressbar = progress.Progress(*progress_columns, disable=False)
     return progressbar
 
