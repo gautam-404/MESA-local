@@ -1,19 +1,15 @@
 import glob
+import multiprocessing as mp
+import threading
 import os
 import shutil
 import sys
 import tarfile
 from itertools import repeat
-from multiprocessing.pool import Pool
 
 import numpy as np
-from MESAcontroller import MesaAccess, ProjectOps, istarmap
+from MESAcontroller import MesaAccess, ProjectOps
 from rich import print, progress, prompt
-
-progress_columns = (progress.SpinnerColumn(spinner_name="moon"),
-                    progress.MofNCompleteColumn(),
-                    *progress.Progress.get_default_columns(),
-                    progress.TimeElapsedColumn())
 
 import helper
 
@@ -21,11 +17,28 @@ import helper
 def mute():
     sys.stdout = open(os.devnull, 'w') 
 
+def unmute():
+    sys.stdout = sys.__stdout__
+
+
+def progress_bar(n):
+    ## Progress bar
+    progress_columns = (#progress.SpinnerColumn(spinner_name="moon"),
+                progress.MofNCompleteColumn(),
+                *progress.Progress.get_default_columns(),
+                progress.TimeElapsedColumn(),
+                progress.TextColumn("\n\n"))
+    progressbar = progress.Progress(*progress_columns, disable=False)
+    return progressbar
+
+
+    
 def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, 
             save_model=False, logging=True, loadInlists=False):
+    ## Create working directory
     name = f"gridwork/work_{model}"
     proj = ProjectOps(name)     
-    proj.create(overwrite=True)             
+    proj.create(overwrite=True) 
     proj.make()
     star = MesaAccess(name)
     star.load_HistoryColumns("./templates/history_columns.list")
@@ -34,6 +47,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
     initial_mass = mass
     Zinit = metallicity
 
+    ## Get Parameters
     terminal_age = float(np.round(2500/initial_mass**2.5,1)*1.0E6)
     phases_params = helper.phases_params(initial_mass, Zinit)     
     if rotation:
@@ -88,7 +102,6 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
     # proj.runGyre(gyre_in="templates/gyre_rot_template_l2.in", data_format="FGONG", files='all', logging=True, parallel=False)
     # proj.runGyre(gyre_in="templates/gyre_rot_template_all_modes.in", data_format="FGONG", files='all', logging=True, parallel=False)
 
-
     ## Archive LOGS
     os.mkdir(f"grid_archive/gyre/freqs_{model}")
     shutil.copy(f"{name}/LOGS/history.data", f"grid_archive/histories/history_{model}.data")
@@ -100,7 +113,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
         with tarfile.open(compressed_file,"w:gz") as tarhandle:
             tarhandle.add(name, arcname=os.path.basename(name))
     shutil.rmtree(name)
-    
+
 
 
 
@@ -164,13 +177,16 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
         ## OMP_NUM_THREADS x n_processes = Total cores available
         n_processes = os.cpu_count() // (int(os.environ['OMP_NUM_THREADS'])+1)   ## Gives best performance
 
-        with Pool(n_processes, initializer=mute) as pool, progress.Progress(*progress_columns) as progress_bar:
+        with progress_bar(n_processes) as progressbar:
             length = len(masses)
-            task = progress_bar.add_task("[red]Running...", total=length)
+            task = progressbar.add_task("[red]Running...", total=length)
             args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                        range(length), [rotation]*length, [save_model]*length, [logging]*length, [loadInlists]*length)
-            for _ in pool.istarmap(evo_star, args, chunksize=1):
-                progress_bar.advance(task)
+                    range(length), repeat(rotation), repeat(save_model), 
+                    repeat(logging), repeat(loadInlists))
+                    
+            with mp.Pool(n_processes, initializer=mute) as pool:
+                for proc in pool.istarmap(evo_star, args):
+                    progressbar.advance(task)
     else:
         # Run grid in serial
         model = 1
