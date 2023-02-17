@@ -1,34 +1,44 @@
 import glob
 import multiprocessing as mp
 import threading
+import time
 import os
 import shutil
-import sys
 import tarfile
 from itertools import repeat
 
 import numpy as np
 from MESAcontroller import MesaAccess, ProjectOps
-from rich import print, progress, prompt
+from rich import print, progress, prompt, live, console, panel
 
 import helper
 
-
-def mute():
-    sys.stdout = open(os.devnull, 'w') 
-
-def unmute():
-    sys.stdout = sys.__stdout__
-
-
-def progress_bar(n):
-    ## Progress bar
-    progress_columns = (#progress.SpinnerColumn(spinner_name="moon"),
+def progress_columns(n):
+    progress_columns = (#progress.TextColumn(helper.scrap_age(n)),
+                progress.SpinnerColumn(),
+                progress.TextColumn("[progress.description]{task.description}"),
+                progress.BarColumn(bar_width=60),
                 progress.MofNCompleteColumn(),
-                *progress.Progress.get_default_columns(),
+                progress.TaskProgressColumn(),
                 progress.TimeElapsedColumn())
-    progressbar = progress.Progress(*progress_columns, disable=False)
-    return progressbar
+    return progress_columns
+
+def live_display(n):
+    ## Progress bar
+    progressbar = progress.Progress(*progress_columns(n), disable=False)
+    group = console.Group(panel.Panel(progressbar, expand=False), panel.Panel(helper.scrap_age(n), expand=False))
+    return live.Live(group), progressbar, group
+
+def update_live_display(live_disp, progressbar, group, n, stop=False):
+    try:
+        while True:
+            group = console.Group(panel.Panel(progressbar, expand=False), panel.Panel(helper.scrap_age(n), expand=False))
+            time.sleep(0.3)
+            live_disp.update(group, refresh=True)
+            if stop is True:
+                break
+    except KeyboardInterrupt or SystemExit:
+        pass
 
 
     
@@ -116,7 +126,7 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
 
 
 
-def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True, 
+def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=True, save_model=True, 
             loadInlists=False, logging=True, overwrite=None, testrun=False):
     if testrun:
         masses = [1.36, 1.36, 1.36, 1.36, 1.36, 1.36]
@@ -176,20 +186,26 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
         ## OMP_NUM_THREADS x n_processes = Total cores available
         n_processes = os.cpu_count() // (int(os.environ['OMP_NUM_THREADS'])+1)   ## Gives best performance
 
-        with progress_bar(n_processes) as progressbar:
-            length = len(masses)
-            task = progressbar.add_task("[red]Running...", total=length)
-            args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
-                    range(length), repeat(rotation), repeat(save_model), 
-                    repeat(logging), repeat(loadInlists))
-                    
-            with mp.Pool(n_processes, initializer=mute) as pool:
-                for proc in pool.istarmap(evo_star, args):
-                    progressbar.advance(task)
+        live_disp, progressbar, group = live_display(n_processes)
+        with live_disp:
+                length = len(masses)
+                task = progressbar.add_task("[b i green]Running...", total=length)
+                args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
+                        range(length), repeat(rotation), repeat(save_model), 
+                        repeat(logging), repeat(loadInlists))
+
+                stop_thread = False
+                thread = threading.Thread(target=update_live_display, 
+                            args=(live_disp, progressbar, group, n_processes, lambda : stop_thread,))
+                thread.start()
+                with mp.Pool(n_processes, initializer=helper.mute) as pool:
+                    for proc in pool.istarmap(evo_star, args):
+                        progressbar.advance(task)
+                stop_thread = True
+                thread.join()
     else:
         # Run grid in serial
         model = 1
-        np.random.seed(0)
         for mass, metallicity, v_surf_init, coarse_age in zip(masses, metallicities, v_surf_init_list, coarse_age_list):
             print(f"[b i yellow]Running model {model} of {len(masses)}")
             evo_star(mass, metallicity, coarse_age, v_surf_init, model=model, 
@@ -202,7 +218,7 @@ def run_grid(parallel=False, create_grid=True, rotation=True, save_model=True,
 ## Main script
 if __name__ == "__main__":
     # run_grid()
-    run_grid(parallel=True, save_model=True, overwrite=True, testrun=True)
+    run_grid(parallel=True, show_progress=True, save_model=True, overwrite=True, testrun=True)
 
     
 
