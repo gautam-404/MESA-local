@@ -136,10 +136,13 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
     else:
         if create_grid:
             ## Create grid
-            masses = np.arange(1.36, 2.22, 0.02)                ## 1.36 - 2.20 Msun (0.02 Msun step)
-            metallicities = np.arange(0.001, 0.0101, 0.0001)    ## 0.001 - 0.010 (0.0001 step)
+            sample_masses = np.arange(1.36, 2.22, 0.02)                ## 1.36 - 2.20 Msun (0.02 Msun step)
+            sample_metallicities = np.arange(0.001, 0.0101, 0.0001)    ## 0.001 - 0.010 (0.0001 step)
+            masses = np.repeat(sample_masses, len(sample_metallicities))
+            metallicities = np.tile(sample_metallicities, len(sample_masses))
             coarse_age_list = 1E6 * np.ones(len(masses))               ## 1E6 yr
             v_surf_init_list = np.random.randint(1, 10, len(masses)).astype(float) * 30
+
         else:
             ## Load grid
             arr = np.genfromtxt("coarse_age_map.csv",
@@ -222,7 +225,7 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
 ## Main script
 if __name__ == "__main__":
     # run_grid()
-    run_grid(parallel=True, show_progress=True, save_model=True, overwrite=True, testrun=True)
+    run_grid(parallel=True, show_progress=True, save_model=True, overwrite=True, testrun=False)
 
     
 
