@@ -43,7 +43,7 @@ def update_live_display(live_disp, progressbar, group, n, stop=False):
 
     
 def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=True, 
-            save_model=False, logging=True, loadInlists=False):
+            save_model=False, logging=True, loadInlists=False, parallel=False):
     ## Create working directory
     name = f"gridwork/work_{model}"
     proj = ProjectOps(name)     
@@ -86,9 +86,9 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
             if phase_name == "Start rotation":
                 star.set('new_surface_rotation_v', v_surf_init)
             if phase_name == "Initial Contraction":
-                proj.run(logging=logging)
+                proj.run(logging=logging, parallel=parallel)
             else:
-                proj.resume(logging=logging)
+                proj.resume(logging=logging, parallel=parallel)
     else:
         ## Run MESA from inlist template by setting parameters for each phase
         inlist_template = "./templates/inlist_template"
@@ -101,9 +101,9 @@ def evo_star(mass, metallicity, coarse_age, v_surf_init=0, model=0, rotation=Tru
                 if rotation:
                     ## Initiate rotation
                     star.set(rotation_init_params, force=True)
-                proj.run(logging=logging)
+                proj.run(logging=logging, parallel=parallel)
             else:
-                proj.resume(logging=logging)
+                proj.resume(logging=logging, parallel=parallel)
 
     # Run GYRE
     proj = ProjectOps(name)
@@ -195,7 +195,7 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
             task = progressbar.add_task("[b i green]Running...", total=length)
             args = zip(masses, metallicities, coarse_age_list, v_surf_init_list,
                     range(length), repeat(rotation), repeat(save_model), 
-                    repeat(logging), repeat(loadInlists))
+                    repeat(logging), repeat(loadInlists), repeat(parallel))
             try:
                 stop_thread = False
                 thread = threading.Thread(target=update_live_display, 
