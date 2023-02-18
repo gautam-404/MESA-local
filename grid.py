@@ -207,7 +207,7 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
                 stop_thread = True
                 thread.join()
             except KeyboardInterrupt:
-                print("KeyboardInterrupt")
+                os.system("echo && echo KeyboardInterrupt && echo")
                 os._exit(1)
                 
     else:
@@ -220,7 +220,7 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
 
             model += 1
             print(f"[b i green]Done with model {model-1} of {len(masses)}")
-            os.system("clear")
+            # os.system("clear")
 
 ## Main script
 if __name__ == "__main__":

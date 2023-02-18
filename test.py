@@ -1,9 +1,9 @@
-from MESAcontroller import MesaAccess, ProjectOps
+from rich import print
+import time
 
-proj = ProjectOps("test")
-proj.create(overwrite=True)
-star = MesaAccess("test")
-star.load_InlistProject("inlists/inlist_12M_sch_rot03_prems")
-star.load_HistoryColumns("inlists/history_columns.list")
-proj.make()
-proj.run()
+for i in range(11):
+    time.sleep(2)
+    print(f"[b i yellow]1Running model {i} of 10", end="\r")
+    print(f"\n[b i yellow]2Running model {i} of 10", end="\r")
+    print(f"\n[b i yellow]3Running model {i} of 10", end="\r")
+    print()
