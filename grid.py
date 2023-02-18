@@ -187,7 +187,9 @@ def run_grid(parallel=False, show_progress=False, create_grid=True, rotation=Tru
     if parallel:
         ## Run grid in parallel
         ## OMP_NUM_THREADS x n_processes = Total cores available
-        n_processes = os.cpu_count() // (int(os.environ['OMP_NUM_THREADS'])+1)   ## Gives best performance
+        n_processes = -(-os.cpu_count() // int(os.environ['OMP_NUM_THREADS']))  ## Gives best performance
+        n_processes -= 1
+
 
         live_disp, progressbar, group = live_display(n_processes)
         with live_disp:
