@@ -61,10 +61,12 @@ def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, rotation=True, 
             star.set(input_params, force=True)
             star.set('max_age', phase_max_age.pop(0))
             if phase_name == "Initial Contraction":
+                proj.run(logging=logging)
+            elif phase_name == "Pre-main Sequence":
                 if rotation:
                     ## Initiate rotation
                     star.set(rotation_init_params, force=True)
-                proj.run(logging=logging)
+                proj.resume(logging=logging)
             else:
                 proj.resume(logging=logging)
 
