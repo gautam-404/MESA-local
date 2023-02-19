@@ -65,15 +65,14 @@ def evo_star(projName, mass, metallicity, coarse_age, ZAMS_surface_v_rot=0, rota
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
-    
     return proj, star
 
 
 if __name__ == "__main__":
-    projName = "test2"
+    projName = "test"
     np.random.seed(0)
     vel = np.random.randint(1, 10) * 30
-    proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, coarse_age=1.0E7,
+    proj, star = evo_star(projName, mass=1.7, metallicity=0.017, coarse_age=1.0E7,
                 ZAMS_surface_v_rot=vel, rotation=True, loadInlists=False, logging=True)
     # projName = "work"
     # proj, star = evo_star(projName, mass=1.6, metallicity=0.0065, coarse_age=1.0E7,
