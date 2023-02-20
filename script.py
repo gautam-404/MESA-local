@@ -6,7 +6,8 @@ from MESAcontroller import MesaAccess, ProjectOps
 import helper
 
 
-def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, overwrite=True, rotation=True, logging=True, loadInlists=False):
+def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, overwrite=True, 
+            rotation=True, logging=True, loadInlists=False):
     print(f"Mass: {mass} MSun, Z: {metallicity}, v_init: {v_surf_init} km/s")
     ## Create working directory
     proj = ProjectOps(name)     
@@ -38,40 +39,41 @@ def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, overwrite=True,
         templates = sorted(glob.glob("./inlists/*inlist*"))
         phase_max_age = [1.0E-3, 2E6, coarse_age, 4.0E7, terminal_age]
 
-    if loadInlists:
-        ## Run MESA from pre-made inlists
-        for phase_name in phases_params.keys():
+    inlist_template = "./templates/inlist_template"
+    for phase_name in phases_params.keys():
+        try:
+            if loadInlists:         ## Run from pre-made inlists
+                star.load_InlistProject(templates.pop(0))
+            else:                   ## Run from inlist template by setting parameters for each phase
+                star.load_InlistProject(inlist_template)
+                star.set(phases_params[phase_name], force=True)
             print(phase_name)
-            star.load_InlistProject(templates.pop(0))
-            star.set('initial_mass', initial_mass, force=True)
-            star.set('initial_z', Zinit, force=True)
-            star.set('max_age', phase_max_age.pop(0))
-            if phase_name == "Start rotation":
-                star.set('new_surface_rotation_v', v_surf_init)
-            if phase_name == "Initial Contraction":
-                proj.run(logging=logging)
-            else:
-                proj.resume(logging=logging)
-    else:
-        ## Run MESA from inlist template by setting parameters for each phase
-        inlist_template = "./templates/inlist_template"
-        for phase_name, input_params in phases_params.items():
-            print(phase_name)
-            star.load_InlistProject(inlist_template)
-            star.set(input_params, force=True)
+            star.set('initial_mass', initial_mass)
+            star.set('initial_z', Zinit)
             star.set('max_age', phase_max_age.pop(0))
             if phase_name == "Initial Contraction":
                 if rotation:
+                    ## Initiate rotation
                     star.set(rotation_init_params, force=True)
                 proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
+        except (ValueError, FileNotFoundError) as e:
+            print(e)
+            break
+        except Exception:
+            print("Failed in phase: ", phase_name)
+            break
+        except KeyboardInterrupt:
+            raise KeyboardInterrupt
+
     return proj, star
 
 
 if __name__ == "__main__":
     projName = "test"
-    vel = np.random.choice(np.arange(2,17,2)).astype(float)
+    # vel = np.random.choice(np.arange(2,17,2)).astype(float)
+    vel = 0.1
     proj, star = evo_star(projName, mass=1.7, metallicity=0.017, coarse_age=1.0E7,
                 v_surf_init=vel, rotation=True, loadInlists=False, logging=True, overwrite=True)
 

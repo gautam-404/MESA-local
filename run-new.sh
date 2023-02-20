@@ -6,4 +6,4 @@ echo
 echo
 echo  
 echo "******RUNNING TESTS******"
-python grid.py
+python script.py
