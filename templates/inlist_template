@@ -6,7 +6,7 @@
 	pgstar_flag = .false.    ! (dont) display on-screen plots
 
 	save_photo_when_terminate = .true.
-	show_log_description_at_start = .true.
+	!show_log_description_at_start = .true.
 
     !# misc 
 	!num_steps_for_garbage_collection = 0 ! might be required on networked computers
