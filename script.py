@@ -6,11 +6,11 @@ from MESAcontroller import MesaAccess, ProjectOps
 import helper
 
 
-def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, rotation=True, logging=True, loadInlists=False):
+def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, overwrite=True, rotation=True, logging=True, loadInlists=False):
     print(f"Mass: {mass} MSun, Z: {metallicity}, v_init: {v_surf_init} km/s")
     ## Create working directory
     proj = ProjectOps(name)     
-    proj.create(overwrite=True) 
+    proj.create(overwrite=overwrite) 
     proj.make()
     star = MesaAccess(name)
     star.load_HistoryColumns("./templates/history_columns.list")
@@ -61,15 +61,11 @@ def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, rotation=True, 
             star.set(input_params, force=True)
             star.set('max_age', phase_max_age.pop(0))
             if phase_name == "Initial Contraction":
-                proj.run(logging=logging)
-            elif phase_name == "Pre-Main Sequence":
                 if rotation:
-                    ## Initiate rotation
                     star.set(rotation_init_params, force=True)
-                proj.resume(logging=logging)
+                proj.run(logging=logging)
             else:
                 proj.resume(logging=logging)
-
     return proj, star
 
 
@@ -77,7 +73,10 @@ if __name__ == "__main__":
     projName = "test"
     vel = np.random.choice(np.arange(2,17,2)).astype(float)
     proj, star = evo_star(projName, mass=1.7, metallicity=0.017, coarse_age=1.0E7,
-                v_surf_init=vel, rotation=True, loadInlists=False, logging=True)
+                v_surf_init=vel, rotation=True, loadInlists=False, logging=True, overwrite=True)
+
+    # proj, star = evo_star(projName, mass=1.4, metallicity=0.001, coarse_age=1.0E7,
+    #             v_surf_init=vel, rotation=True, loadInlists=False, logging=True)
 
     # # Run GYRE
     # proj = ProjectOps(projName)
