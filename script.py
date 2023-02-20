@@ -61,7 +61,8 @@ def evo_star(name, mass, metallicity, coarse_age, v_surf_init=0, overwrite=True,
         except (ValueError, FileNotFoundError) as e:
             print(e)
             break
-        except Exception:
+        except Exception as e:
+            print(e)
             print(f"{phase_name} run failed. Check run log for details.")
             break
         except KeyboardInterrupt:
